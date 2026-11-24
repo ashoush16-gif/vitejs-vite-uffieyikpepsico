@@ -21,7 +21,7 @@ export default function App() {
   }, [])
 
   if (loading) return (
-    <div style={{ minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:"'Barlow', sans-serif", color:'#6b7280', fontSize:13 }}>
+    <div style={{ minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:"Gilroy,Arial,sans-serif", color:'#5B6B7B', fontSize:13 }}>
       Loading...
     </div>
   )

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
 
-const NAVY = '#001a40'
-const BLUE = '#004B93'
+const NAVY = '#02355A'
+const BLUE = '#155798'
 
 const BUS = [
   { country:'Poland', bu:'Beverages', live:true },
@@ -51,7 +51,7 @@ function PepsiCoSVG() {
   return (
     <svg height="36" viewBox="0 0 320 80" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="40" cy="40" r="36" fill="white" fillOpacity="0.95"/>
-      <path d="M40 6 C28 12 18 25 18 40 C18 55 28 68 40 74" stroke="#004B93" strokeWidth="2.5" fill="none"/>
+      <path d="M40 6 C28 12 18 25 18 40 C18 55 28 68 40 74" stroke="#155798" strokeWidth="2.5" fill="none"/>
       <path d="M40 6 C52 12 62 25 62 40 C62 55 52 68 40 74" stroke="#E31837" strokeWidth="2.5" fill="none"/>
       <line x1="4" y1="40" x2="76" y2="40" stroke="#9ca3af" strokeWidth="1.5"/>
       <line x1="8" y1="24" x2="72" y2="24" stroke="#9ca3af" strokeWidth="1"/>
@@ -64,7 +64,7 @@ function PepsiCoSVG() {
 function PepsiGlobe({ size = 40 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 80 80" fill="none">
-      <circle cx="40" cy="40" r="38" fill="#004B93"/>
+      <circle cx="40" cy="40" r="38" fill="#155798"/>
       <path d="M40 3 C40 3 16 14 16 40 C16 66 40 77 40 77 C40 77 64 66 64 40 C64 14 40 3 40 3Z" fill="#E31837"/>
       <path d="M40 3 C55 10 64 24 64 40 C64 56 55 70 40 77 L40 3Z" fill="white"/>
     </svg>
@@ -127,7 +127,7 @@ export default function Hub({ session, onSelectBU }) {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#F0F2F5', fontFamily: "'Barlow', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: '#F6F4F1', fontFamily: "Gilroy,Arial,sans-serif" }}>
 
       {/* Header */}
       <div style={{ background: `linear-gradient(135deg, ${NAVY} 0%, ${BLUE} 100%)`, boxShadow: '0 2px 20px rgba(0,0,0,0.2)' }}>
@@ -140,7 +140,7 @@ export default function Hub({ session, onSelectBU }) {
             </div>
             <button
               onClick={() => supabase.auth.signOut()}
-              style={{ fontSize: 11, padding: '5px 12px', background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: 6, color: 'white', cursor: 'pointer', fontFamily: "'Barlow', sans-serif" }}
+              style={{ fontSize: 11, padding: '5px 12px', background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: 6, color: 'white', cursor: 'pointer', fontFamily: "Gilroy,Arial,sans-serif" }}
             >Sign out</button>
           </div>
         </div>
@@ -149,10 +149,10 @@ export default function Hub({ session, onSelectBU }) {
       {/* Hero */}
       <div style={{ background: `linear-gradient(135deg, ${NAVY}, ${BLUE})`, padding: '44px 24px 72px' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', textAlign: 'center' }}>
-          <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.55)', letterSpacing: 4, textTransform: 'uppercase', marginBottom: 10 }}>
+          <div style={{ fontFamily: "'GT Pressura','Arial Narrow',Arial,sans-serif", fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.55)', letterSpacing: 4, textTransform: 'uppercase', marginBottom: 10 }}>
             Supply Planning Foundation · SPF Program
           </div>
-          <h1 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 46, fontWeight: 700, color: 'white', letterSpacing: 1, margin: 0 }}>
+          <h1 style={{ fontFamily: "'GT Pressura','Arial Narrow',Arial,sans-serif", fontSize: 46, fontWeight: 700, color: 'white', letterSpacing: 1, margin: 0 }}>
             Execution Control Tower
           </h1>
           <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.6)', marginTop: 12 }}>
@@ -175,7 +175,7 @@ export default function Hub({ session, onSelectBU }) {
                 style={{
                   background: 'white', borderRadius: 14, overflow: 'hidden',
                   boxShadow: isLive ? '0 4px 24px rgba(0,75,147,0.18)' : '0 2px 8px rgba(0,0,0,0.07)',
-                  border: isLive ? `2px solid ${BLUE}` : '2px solid #e5e7eb',
+                  border: isLive ? `2px solid ${BLUE}` : '2px solid #E3E6EA',
                   cursor: isLive ? 'pointer' : 'default',
                   opacity: isLive ? 1 : 0.72,
                   transition: 'all 0.2s',
@@ -192,13 +192,13 @@ export default function Hub({ session, onSelectBU }) {
               >
                 {/* Card header strip */}
                 <div style={{
-                  background: isLive ? `linear-gradient(135deg, ${NAVY}, ${BLUE})` : '#6b7280',
+                  background: isLive ? `linear-gradient(135deg, ${NAVY}, ${BLUE})` : '#5B6B7B',
                   padding: '14px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between'
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                     <span style={{ fontSize: 26 }}>{FLAGS[bu.country] || '🌍'}</span>
                     <div>
-                      <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 17, fontWeight: 700, color: 'white', letterSpacing: 0.5 }}>{bu.country}</div>
+                      <div style={{ fontFamily: "'GT Pressura','Arial Narrow',Arial,sans-serif", fontSize: 17, fontWeight: 700, color: 'white', letterSpacing: 0.5 }}>{bu.country}</div>
                       <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.7)' }}>{bu.bu}</div>
                     </div>
                   </div>
@@ -214,13 +214,13 @@ export default function Hub({ session, onSelectBU }) {
                       <>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginBottom: 12 }}>
                           {[
-                            { label:'Red', val:polandStats.red, color:'#dc2626', bg:'#fef2f2' },
-                            { label:'Amber', val:polandStats.amber, color:'#d97706', bg:'#fffbeb' },
-                            { label:'Green', val:polandStats.green, color:'#16a34a', bg:'#f0fdf4' },
+                            { label:'Red', val:polandStats.red, color:'#C8102E', bg:'#FCE8EB' },
+                            { label:'Amber', val:polandStats.amber, color:'#EB9F0A', bg:'#FFF6DE' },
+                            { label:'Green', val:polandStats.green, color:'#5D910D', bg:'#EEF6E0' },
                           ].map(s => (
                             <div key={s.label} style={{ background: s.bg, borderRadius: 8, padding: '8px 4px', textAlign: 'center' }}>
-                              <div style={{ fontSize: 22, fontWeight: 700, color: s.color, fontFamily: "'Barlow Condensed', sans-serif" }}>{s.val}</div>
-                              <div style={{ fontSize: 10, color: '#6b7280' }}>{s.label}</div>
+                              <div style={{ fontSize: 22, fontWeight: 700, color: s.color, fontFamily: "'GT Pressura','Arial Narrow',Arial,sans-serif" }}>{s.val}</div>
+                              <div style={{ fontSize: 10, color: '#5B6B7B' }}>{s.label}</div>
                             </div>
                           ))}
                         </div>
@@ -228,18 +228,18 @@ export default function Hub({ session, onSelectBU }) {
                           Last session: {fmtDate(polandStats.date)}
                         </div>
                         {agingActions > 0 && (
-                          <div style={{ background: '#fef2f2', border: '1px solid #fca5a5', borderRadius: 6, padding: '6px 10px', fontSize: 11, color: '#dc2626', fontWeight: 500, marginBottom: 10 }}>
+                          <div style={{ background: '#FCE8EB', border: '1px solid #F3B3BE', borderRadius: 6, padding: '6px 10px', fontSize: 11, color: '#C8102E', fontWeight: 500, marginBottom: 10 }}>
                             ⚠️ {agingActions} action{agingActions > 1 ? 's' : ''} open 5+ days
                           </div>
                         )}
-                        <div style={{ background: BLUE, color: 'white', borderRadius: 8, padding: '9px', textAlign: 'center', fontSize: 13, fontWeight: 600, fontFamily: "'Barlow', sans-serif" }}>
+                        <div style={{ background: BLUE, color: 'white', borderRadius: 8, padding: '9px', textAlign: 'center', fontSize: 13, fontWeight: 600, fontFamily: "Gilroy,Arial,sans-serif" }}>
                           Enter Board →
                         </div>
                       </>
                     ) : (
                       <>
                         <div style={{ fontSize: 12, color: '#9ca3af', marginBottom: 12 }}>No sessions yet — enter to get started</div>
-                        <div style={{ background: BLUE, color: 'white', borderRadius: 8, padding: '9px', textAlign: 'center', fontSize: 13, fontWeight: 600, fontFamily: "'Barlow', sans-serif" }}>
+                        <div style={{ background: BLUE, color: 'white', borderRadius: 8, padding: '9px', textAlign: 'center', fontSize: 13, fontWeight: 600, fontFamily: "Gilroy,Arial,sans-serif" }}>
                           Enter Board →
                         </div>
                       </>
@@ -247,7 +247,7 @@ export default function Hub({ session, onSelectBU }) {
                   ) : (
                     <div style={{ padding: '16px 0', textAlign: 'center' }}>
                       <div style={{ fontSize: 30, marginBottom: 8 }}>🔒</div>
-                      <div style={{ fontSize: 13, fontWeight: 600, color: '#374151', marginBottom: 4 }}>Coming Soon</div>
+                      <div style={{ fontSize: 13, fontWeight: 600, color: '#02355A', marginBottom: 4 }}>Coming Soon</div>
                       <div style={{ fontSize: 11, color: '#9ca3af' }}>This board is not yet active</div>
                     </div>
                   )}

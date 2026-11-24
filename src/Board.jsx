@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from './supabaseClient'
+import { stColor, stBg, stBorder } from './brand/pepsicoTheme'
+import InsightsPanel from './dds/InsightsPanel'
 
-const BLUE = '#004B93'
-const NAVY = '#001a40'
+const BLUE = '#155798'
+const NAVY = '#02355A'
 
 const GROUPS = [
   {
@@ -83,9 +85,7 @@ function getStatus(kpi, val) {
   return v <= kpi.tv ? 'green' : v <= kpi.tv * 1.3 ? 'amber' : 'red'
 }
 
-function stColor(s) { return s==='red'?'#dc2626':s==='amber'?'#d97706':s==='green'?'#16a34a':'#9ca3af' }
-function stBg(s) { return s==='red'?'#fef2f2':s==='amber'?'#fffbeb':s==='green'?'#f0fdf4':'#f9fafb' }
-function stBorder(s) { return s==='red'?'#fca5a5':s==='amber'?'#fcd34d':s==='green'?'#86efac':'#e5e7eb' }
+// stColor / stBg / stBorder now come from ./brand/pepsicoTheme (PepsiCo status colours)
 
 function nextWeekday(date, dir) {
   const d = new Date(date + 'T12:00:00')
@@ -121,7 +121,7 @@ function TrendChart({ sessions, kpiId, kpi, color }) {
       const slice = data.slice(Math.max(0,i-6),i+1).filter(v=>v!==null)
       return slice.length ? Math.round(slice.reduce((a,b)=>a+b,0)/slice.length*100)/100 : null
     })
-    const barColors = last30.map(s => { const st=getStatus(kpi,s.values?.[kpiId]); return st==='red'?'#fca5a5':st==='amber'?'#fcd34d':st==='green'?'#86efac':'#e5e7eb' })
+    const barColors = last30.map(s => { const st=getStatus(kpi,s.values?.[kpiId]); return st==='red'?'#F3B3BE':st==='amber'?'#FFE8AD':st==='green'?'#BFDE7D':'#E3E6EA' })
     const barBorder = last30.map(s => stColor(getStatus(kpi,s.values?.[kpiId])))
     if (chartRef.current) chartRef.current.destroy()
     chartRef.current = new window.Chart(canvasRef.current, {
@@ -132,10 +132,10 @@ function TrendChart({ sessions, kpiId, kpi, color }) {
       ]},
       options: {
         responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{display:false}, tooltip:{ backgroundColor:'rgba(0,26,64,0.9)', titleFont:{family:"'Barlow',sans-serif",size:11}, bodyFont:{family:"'Barlow',sans-serif",size:12} }},
+        plugins:{ legend:{display:false}, tooltip:{ backgroundColor:'rgba(0,26,64,0.9)', titleFont:{family:"Gilroy,Arial,sans-serif",size:11}, bodyFont:{family:"Gilroy,Arial,sans-serif",size:12} }},
         scales:{
-          x:{ ticks:{font:{family:"'Barlow',sans-serif",size:9},maxRotation:45,autoSkip:true,maxTicksLimit:8}, grid:{color:'rgba(0,0,0,0.04)'} },
-          y:{ ticks:{font:{family:"'Barlow',sans-serif",size:10}}, grid:{color:'rgba(0,0,0,0.06)'} }
+          x:{ ticks:{font:{family:"Gilroy,Arial,sans-serif",size:9},maxRotation:45,autoSkip:true,maxTicksLimit:8}, grid:{color:'rgba(0,0,0,0.04)'} },
+          y:{ ticks:{font:{family:"Gilroy,Arial,sans-serif",size:10}}, grid:{color:'rgba(0,0,0,0.06)'} }
         }
       }
     })
@@ -157,9 +157,9 @@ function HeatmapChart({ sessions }) {
       <table style={{ borderCollapse:'collapse', fontSize:10, width:'100%' }}>
         <thead>
           <tr>
-            <th style={{ padding:'4px 8px', textAlign:'left', color:'#6b7280', fontWeight:500, minWidth:160 }}>KPI</th>
+            <th style={{ padding:'4px 8px', textAlign:'left', color:'#5B6B7B', fontWeight:500, minWidth:160 }}>KPI</th>
             {last14.map(s => (
-              <th key={s.date} style={{ padding:'4px 4px', textAlign:'center', color:'#6b7280', fontWeight:400, minWidth:32 }}>
+              <th key={s.date} style={{ padding:'4px 4px', textAlign:'center', color:'#5B6B7B', fontWeight:400, minWidth:32 }}>
                 {new Date(s.date+'T12:00:00').toLocaleDateString('en-GB',{day:'2-digit',month:'short'})}
               </th>
             ))}
@@ -168,16 +168,16 @@ function HeatmapChart({ sessions }) {
         <tbody>
           {displayKpis.map(kpi => (
             <tr key={kpi.id}>
-              <td style={{ padding:'3px 8px', color:'#374151', fontSize:11, borderBottom:'1px solid #f3f4f6' }}>
+              <td style={{ padding:'3px 8px', color:'#02355A', fontSize:11, borderBottom:'1px solid #f3f4f6' }}>
                 {kpi.name.length > 28 ? kpi.name.slice(0,28)+'…' : kpi.name}
               </td>
               {last14.map(s => {
                 const st = getStatus(kpi, s.values?.[kpi.id])
-                const bg = st==='red'?'#fca5a5':st==='amber'?'#fcd34d':st==='green'?'#86efac':'#f3f4f6'
+                const bg = st==='red'?'#F3B3BE':st==='amber'?'#FFE8AD':st==='green'?'#BFDE7D':'#f3f4f6'
                 const val = s.values?.[kpi.id]
                 return (
                   <td key={s.date} title={`${kpi.name}: ${val ?? '—'}`} style={{ padding:'3px 4px', textAlign:'center', background:bg, borderBottom:'1px solid #f9fafb', borderRight:'1px solid #f9fafb' }}>
-                    <div style={{ width:24, height:24, borderRadius:4, background:bg, margin:'0 auto', display:'flex', alignItems:'center', justifyContent:'center', fontSize:9, color: st==='red'?'#991b1b':st==='amber'?'#92400e':st==='green'?'#166534':'#9ca3af' }}>
+                    <div style={{ width:24, height:24, borderRadius:4, background:bg, margin:'0 auto', display:'flex', alignItems:'center', justifyContent:'center', fontSize:9, color: st==='red'?'#A00D25':st==='amber'?'#954F09':st==='green'?'#166534':'#9ca3af' }}>
                       {st==='red'?'✕':st==='amber'?'~':st==='green'?'✓':'·'}
                     </div>
                   </td>
@@ -210,13 +210,13 @@ function WorstOffenders({ sessions }) {
     <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
       {ranked.map(({ kpi, pct }) => (
         <div key={kpi.id} style={{ display:'flex', alignItems:'center', gap:10 }}>
-          <div style={{ fontSize:11, color:'#374151', width:200, flexShrink:0 }}>
+          <div style={{ fontSize:11, color:'#02355A', width:200, flexShrink:0 }}>
             {kpi.name.length>26?kpi.name.slice(0,26)+'…':kpi.name}
           </div>
           <div style={{ flex:1, background:'#f3f4f6', borderRadius:4, height:18, overflow:'hidden' }}>
-            <div style={{ width:`${pct}%`, height:'100%', background: pct>=50?'#dc2626':pct>=25?'#d97706':'#16a34a', borderRadius:4, transition:'width 0.5s' }}/>
+            <div style={{ width:`${pct}%`, height:'100%', background: pct>=50?'#C8102E':pct>=25?'#EB9F0A':'#5D910D', borderRadius:4, transition:'width 0.5s' }}/>
           </div>
-          <div style={{ fontSize:11, fontWeight:600, color: pct>=50?'#dc2626':pct>=25?'#d97706':'#16a34a', width:36, textAlign:'right' }}>{pct}%</div>
+          <div style={{ fontSize:11, fontWeight:600, color: pct>=50?'#C8102E':pct>=25?'#EB9F0A':'#5D910D', width:36, textAlign:'right' }}>{pct}%</div>
         </div>
       ))}
       {!ranked.length && <div style={{color:'#9ca3af',fontSize:12}}>All KPIs green 🎉</div>}
@@ -245,16 +245,16 @@ function StreakTracker({ sessions }) {
   return (
     <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
       {streaks.map(({ kpi, streak, streakColor }) => {
-        const color = streakColor==='red'?'#dc2626':streakColor==='green'?'#16a34a':'#d97706'
-        const bg = streakColor==='red'?'#fef2f2':streakColor==='green'?'#f0fdf4':'#fffbeb'
+        const color = streakColor==='red'?'#C8102E':streakColor==='green'?'#5D910D':'#EB9F0A'
+        const bg = streakColor==='red'?'#FCE8EB':streakColor==='green'?'#EEF6E0':'#FFF6DE'
         const label = streakColor==='red'?'🔴 Red':streakColor==='green'?'🟢 Green':'🟡 Amber'
         return (
-          <div key={kpi.id} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'8px 12px', background:bg, borderRadius:8, border:`1px solid ${streakColor==='red'?'#fca5a5':streakColor==='green'?'#86efac':'#fcd34d'}` }}>
+          <div key={kpi.id} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'8px 12px', background:bg, borderRadius:8, border:`1px solid ${streakColor==='red'?'#F3B3BE':streakColor==='green'?'#BFDE7D':'#FFE8AD'}` }}>
             <div>
               <div style={{ fontSize:12, fontWeight:500, color:'#1f2937' }}>{kpi.name.length>35?kpi.name.slice(0,35)+'…':kpi.name}</div>
-              <div style={{ fontSize:10, color:'#6b7280', marginTop:1 }}>{label} streak</div>
+              <div style={{ fontSize:10, color:'#5B6B7B', marginTop:1 }}>{label} streak</div>
             </div>
-            <div style={{ fontSize:22, fontWeight:700, color, fontFamily:"'Barlow Condensed',sans-serif" }}>{streak}d</div>
+            <div style={{ fontSize:22, fontWeight:700, color, fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif" }}>{streak}d</div>
           </div>
         )
       })}
@@ -276,19 +276,19 @@ function RCAnalytics({ sessions }) {
   const sorted = Object.entries(cats).sort((a,b)=>b[1]-a[1])
   const total = allRcs.length
   const recurring = allRcs.filter(r=>r.recurring).length
-  const colors = ['#004B93','#0066cc','#3b82f6','#60a5fa','#93c5fd','#bfdbfe','#dbeafe','#E31837','#ef4444','#f87171']
+  const colors = ['#155798','#3680CE','#3b82f6','#60a5fa','#A6CBF0','#bfdbfe','#dbeafe','#E31837','#ef4444','#f87171']
 
   return (
     <div>
       <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:10, marginBottom:16 }}>
         {[
           { label:'Total RC logged', val:total, color:BLUE },
-          { label:'Recurring issues', val:recurring, color:'#dc2626' },
-          { label:'Top category', val:sorted[0]?.[0]?.split(' ')[0]||'—', color:'#d97706', small:true },
+          { label:'Recurring issues', val:recurring, color:'#C8102E' },
+          { label:'Top category', val:sorted[0]?.[0]?.split(' ')[0]||'—', color:'#EB9F0A', small:true },
         ].map(c => (
-          <div key={c.label} style={{ background:'white', border:'1px solid #e5e7eb', borderRadius:8, padding:'10px 12px', textAlign:'center' }}>
-            <div style={{ fontSize:10, color:'#6b7280', marginBottom:3, textTransform:'uppercase', letterSpacing:0.3 }}>{c.label}</div>
-            <div style={{ fontSize:c.small?14:22, fontWeight:700, color:c.color, fontFamily:"'Barlow Condensed',sans-serif" }}>{c.val}</div>
+          <div key={c.label} style={{ background:'white', border:'1px solid #E3E6EA', borderRadius:8, padding:'10px 12px', textAlign:'center' }}>
+            <div style={{ fontSize:10, color:'#5B6B7B', marginBottom:3, textTransform:'uppercase', letterSpacing:0.3 }}>{c.label}</div>
+            <div style={{ fontSize:c.small?14:22, fontWeight:700, color:c.color, fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif" }}>{c.val}</div>
           </div>
         ))}
       </div>
@@ -296,11 +296,11 @@ function RCAnalytics({ sessions }) {
         {sorted.map(([cat, cnt], i) => (
           <div key={cat} style={{ display:'flex', alignItems:'center', gap:10 }}>
             <div style={{ width:12, height:12, borderRadius:'50%', background:colors[i%colors.length], flexShrink:0 }}/>
-            <div style={{ fontSize:12, color:'#374151', flex:1 }}>{cat}</div>
+            <div style={{ fontSize:12, color:'#02355A', flex:1 }}>{cat}</div>
             <div style={{ background:'#f3f4f6', borderRadius:4, height:14, width:120, overflow:'hidden' }}>
               <div style={{ width:`${Math.round(cnt/sorted[0][1]*100)}%`, height:'100%', background:colors[i%colors.length], borderRadius:4 }}/>
             </div>
-            <div style={{ fontSize:11, color:'#6b7280', width:20, textAlign:'right' }}>{cnt}</div>
+            <div style={{ fontSize:11, color:'#5B6B7B', width:20, textAlign:'right' }}>{cnt}</div>
           </div>
         ))}
       </div>
@@ -441,8 +441,8 @@ Tone: Executive briefing level — strategic, data-driven, no jargon. Under 350 
   return (
     <div>
       <div style={{ marginBottom:16 }}>
-        <h2 style={{ fontSize:18, fontWeight:700, color:NAVY, fontFamily:"'Barlow Condensed',sans-serif" }}>AI Reports</h2>
-        <p style={{ fontSize:12, color:'#6b7280', marginTop:2 }}>Generate intelligent reports from your DDS data powered by Claude AI</p>
+        <h2 style={{ fontSize:18, fontWeight:700, color:NAVY, fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif" }}>AI Reports</h2>
+        <p style={{ fontSize:12, color:'#5B6B7B', marginTop:2 }}>Generate intelligent reports from your DDS data powered by Claude AI</p>
       </div>
 
       {/* Report type selector */}
@@ -450,37 +450,37 @@ Tone: Executive briefing level — strategic, data-driven, no jargon. Under 350 
         {REPORT_TYPES.map(rt => (
           <div key={rt.id} onClick={() => setReportType(rt.id)} style={{
             background: reportType===rt.id ? BLUE : 'white',
-            border: `2px solid ${reportType===rt.id ? BLUE : '#e5e7eb'}`,
+            border: `2px solid ${reportType===rt.id ? BLUE : '#E3E6EA'}`,
             borderRadius:10, padding:'14px 16px', cursor:'pointer', transition:'all 0.15s',
           }}>
             <div style={{ fontSize:20, marginBottom:6 }}>{rt.icon}</div>
-            <div style={{ fontSize:13, fontWeight:600, color:reportType===rt.id?'white':NAVY, marginBottom:3, fontFamily:"'Barlow Condensed',sans-serif" }}>{rt.label}</div>
-            <div style={{ fontSize:11, color:reportType===rt.id?'rgba(255,255,255,0.75)':'#6b7280' }}>{rt.desc}</div>
+            <div style={{ fontSize:13, fontWeight:600, color:reportType===rt.id?'white':NAVY, marginBottom:3, fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif" }}>{rt.label}</div>
+            <div style={{ fontSize:11, color:reportType===rt.id?'rgba(255,255,255,0.75)':'#5B6B7B' }}>{rt.desc}</div>
           </div>
         ))}
       </div>
 
       <button onClick={generateReport} disabled={loading} style={{
-        background: loading ? '#93c5fd' : `linear-gradient(135deg,${BLUE},#0066cc)`,
+        background: loading ? '#A6CBF0' : `linear-gradient(135deg,${BLUE},#3680CE)`,
         color:'white', border:'none', borderRadius:8, padding:'11px 24px',
         fontSize:13, fontWeight:600, cursor:loading?'default':'pointer',
-        fontFamily:"'Barlow',sans-serif", marginBottom:16,
+        fontFamily:"Gilroy,Arial,sans-serif", marginBottom:16,
         boxShadow: loading?'none':'0 3px 12px rgba(0,75,147,0.35)',
       }}>
         {loading ? '⏳ Generating report...' : `Generate ${REPORT_TYPES.find(r=>r.id===reportType)?.label}`}
       </button>
 
       {report && (
-        <div style={{ background:'white', borderRadius:10, border:'1px solid #e5e7eb', overflow:'hidden', boxShadow:'0 1px 4px rgba(0,0,0,0.06)' }}>
+        <div style={{ background:'white', borderRadius:10, border:'1px solid #E3E6EA', overflow:'hidden', boxShadow:'0 1px 4px rgba(0,0,0,0.06)' }}>
           <div style={{ background:`linear-gradient(135deg,${NAVY},${BLUE})`, padding:'12px 16px', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
             <div style={{ fontSize:13, fontWeight:600, color:'white' }}>
               {REPORT_TYPES.find(r=>r.id===reportType)?.label} — {new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}
             </div>
-            <button onClick={copyReport} style={{ background:'rgba(255,255,255,0.15)', border:'1px solid rgba(255,255,255,0.3)', borderRadius:6, color:'white', fontSize:11, padding:'4px 12px', cursor:'pointer', fontFamily:"'Barlow',sans-serif" }}>
+            <button onClick={copyReport} style={{ background:'rgba(255,255,255,0.15)', border:'1px solid rgba(255,255,255,0.3)', borderRadius:6, color:'white', fontSize:11, padding:'4px 12px', cursor:'pointer', fontFamily:"Gilroy,Arial,sans-serif" }}>
               {copied ? '✓ Copied!' : '📋 Copy for Teams/Email'}
             </button>
           </div>
-          <div style={{ padding:'20px', fontSize:13, color:'#374151', lineHeight:1.7, whiteSpace:'pre-wrap' }}>
+          <div style={{ padding:'20px', fontSize:13, color:'#02355A', lineHeight:1.7, whiteSpace:'pre-wrap' }}>
             {report}
           </div>
         </div>
@@ -527,25 +527,25 @@ function ImportPanel() {
   return (
     <div style={{ maxWidth:600 }}>
       <div style={{ marginBottom:16 }}>
-        <h2 style={{ fontSize:18, fontWeight:700, color:NAVY, fontFamily:"'Barlow Condensed',sans-serif" }}>Import Historical Data</h2>
-        <p style={{ fontSize:13, color:'#6b7280', marginTop:4 }}>Loads 13 sessions from April 13–29, 2026 from your DDS Excel file into Supabase.</p>
+        <h2 style={{ fontSize:18, fontWeight:700, color:NAVY, fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif" }}>Import Historical Data</h2>
+        <p style={{ fontSize:13, color:'#5B6B7B', marginTop:4 }}>Loads 13 sessions from April 13–29, 2026 from your DDS Excel file into Supabase.</p>
       </div>
       <div style={{ background:'white', borderRadius:10, padding:20, boxShadow:'0 1px 4px rgba(0,0,0,0.06)', marginBottom:16 }}>
-        <div style={{ fontSize:13, color:'#374151', marginBottom:16 }}>
+        <div style={{ fontSize:13, color:'#02355A', marginBottom:16 }}>
           This will load all historical KPI values. Existing sessions are skipped automatically. <strong>Run once only.</strong>
         </div>
         <button onClick={runImport} disabled={running||done} style={{
-          background: done?'#16a34a':running?'#93c5fd':`linear-gradient(135deg,${BLUE},#0066cc)`,
+          background: done?'#5D910D':running?'#A6CBF0':`linear-gradient(135deg,${BLUE},#3680CE)`,
           color:'white', border:'none', borderRadius:8, padding:'10px 20px',
           fontSize:13, fontWeight:600, cursor:running||done?'default':'pointer',
-          fontFamily:"'Barlow',sans-serif",
+          fontFamily:"Gilroy,Arial,sans-serif",
         }}>
           {done ? '✅ Import complete' : running ? '⏳ Importing...' : '▶ Run import'}
         </button>
       </div>
       {log.length > 0 && (
         <div style={{ background:'#1f2937', borderRadius:10, padding:16, fontFamily:'monospace', fontSize:11, color:'#d1fae5', maxHeight:320, overflowY:'auto' }}>
-          {log.map((l,i) => <div key={i} style={{ marginBottom:2, color: l.startsWith('❌')?'#fca5a5':l.startsWith('⏭')?'#fcd34d':'#d1fae5' }}>{l}</div>)}
+          {log.map((l,i) => <div key={i} style={{ marginBottom:2, color: l.startsWith('❌')?'#F3B3BE':l.startsWith('⏭')?'#FFE8AD':'#d1fae5' }}>{l}</div>)}
         </div>
       )}
     </div>
@@ -664,7 +664,7 @@ export default function Board({ session, selectedBU, onBack }) {
   ]
 
   const tabStyle = (t) => ({
-    fontSize:12, fontFamily:"'Barlow',sans-serif", fontWeight:tab===t?600:400,
+    fontSize:12, fontFamily:"Gilroy,Arial,sans-serif", fontWeight:tab===t?600:400,
     padding:'10px 14px', background:'none', border:'none',
     borderBottom:`2px solid ${tab===t?'white':'transparent'}`,
     color:tab===t?'white':'rgba(255,255,255,0.55)',
@@ -672,7 +672,7 @@ export default function Board({ session, selectedBU, onBack }) {
   })
 
   return (
-    <div style={{ minHeight:'100vh', background:'#F0F2F5', fontFamily:"'Barlow',sans-serif" }}>
+    <div style={{ minHeight:'100vh', background:'#F6F4F1', fontFamily:"Gilroy,Arial,sans-serif" }}>
 
       {/* HEADER */}
       <div style={{ background:`linear-gradient(135deg,${NAVY} 0%,${BLUE} 100%)`, boxShadow:'0 2px 20px rgba(0,0,0,0.2)' }}>
@@ -680,12 +680,12 @@ export default function Board({ session, selectedBU, onBack }) {
           <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'14px 0', borderBottom:'1px solid rgba(255,255,255,0.1)' }}>
             <div style={{ display:'flex', alignItems:'center', gap:14 }}>
               {onBack && (
-                <button onClick={onBack} style={{ background:'rgba(255,255,255,0.12)', border:'1px solid rgba(255,255,255,0.2)', borderRadius:6, color:'white', fontSize:12, padding:'5px 10px', cursor:'pointer', fontFamily:"'Barlow',sans-serif" }}>
+                <button onClick={onBack} style={{ background:'rgba(255,255,255,0.12)', border:'1px solid rgba(255,255,255,0.2)', borderRadius:6, color:'white', fontSize:12, padding:'5px 10px', cursor:'pointer', fontFamily:"Gilroy,Arial,sans-serif" }}>
                   ← Hub
                 </button>
               )}
               <div>
-                <div style={{ fontFamily:"'Barlow Condensed',sans-serif", fontSize:16, fontWeight:700, color:'white', letterSpacing:1 }}>
+                <div style={{ fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif", fontSize:16, fontWeight:700, color:'white', letterSpacing:1 }}>
                   DAILY DIRECTION SETTING
                 </div>
                 <div style={{ fontSize:11, color:'rgba(255,255,255,0.6)', letterSpacing:0.5 }}>
@@ -695,7 +695,7 @@ export default function Board({ session, selectedBU, onBack }) {
             </div>
             <div style={{ display:'flex', alignItems:'center', gap:10 }}>
               {agingCount > 0 && (
-                <div style={{ background:'#dc2626', color:'white', borderRadius:20, padding:'3px 10px', fontSize:11, fontWeight:600 }}>
+                <div style={{ background:'#C8102E', color:'white', borderRadius:20, padding:'3px 10px', fontSize:11, fontWeight:600 }}>
                   ⚠️ {agingCount} aging action{agingCount>1?'s':''}
                 </div>
               )}
@@ -705,7 +705,7 @@ export default function Board({ session, selectedBU, onBack }) {
                   {new Date().toLocaleDateString('en-GB',{weekday:'long',day:'2-digit',month:'long',year:'numeric'})}
                 </div>
               </div>
-              <button onClick={()=>supabase.auth.signOut()} style={{ fontSize:11, padding:'5px 12px', background:'rgba(255,255,255,0.12)', border:'1px solid rgba(255,255,255,0.2)', borderRadius:6, color:'white', cursor:'pointer', fontFamily:"'Barlow',sans-serif" }}>
+              <button onClick={()=>supabase.auth.signOut()} style={{ fontSize:11, padding:'5px 12px', background:'rgba(255,255,255,0.12)', border:'1px solid rgba(255,255,255,0.2)', borderRadius:6, color:'white', cursor:'pointer', fontFamily:"Gilroy,Arial,sans-serif" }}>
                 Sign out
               </button>
             </div>
@@ -724,15 +724,15 @@ export default function Board({ session, selectedBU, onBack }) {
             {/* Summary cards */}
             <div style={{ display:'grid', gridTemplateColumns:'repeat(5,1fr)', gap:12, marginBottom:16 }}>
               {[
-                { label:'Red KPIs', val:counts.red||0, color:'#dc2626', bg:'#fef2f2', border:'#fca5a5' },
-                { label:'Amber KPIs', val:counts.amber||0, color:'#d97706', bg:'#fffbeb', border:'#fcd34d' },
-                { label:'Green KPIs', val:counts.green||0, color:'#16a34a', bg:'#f0fdf4', border:'#86efac' },
-                { label:'Not filled', val:counts.empty||0, color:'#6b7280', bg:'#f9fafb', border:'#e5e7eb' },
-                { label:'Open actions', val:openActions.length, color:BLUE, bg:'#eff6ff', border:'#93c5fd' },
+                { label:'Red KPIs', val:counts.red||0, color:'#C8102E', bg:'#FCE8EB', border:'#F3B3BE' },
+                { label:'Amber KPIs', val:counts.amber||0, color:'#EB9F0A', bg:'#FFF6DE', border:'#FFE8AD' },
+                { label:'Green KPIs', val:counts.green||0, color:'#5D910D', bg:'#EEF6E0', border:'#BFDE7D' },
+                { label:'Not filled', val:counts.empty||0, color:'#5B6B7B', bg:'#f9fafb', border:'#E3E6EA' },
+                { label:'Open actions', val:openActions.length, color:BLUE, bg:'#eff6ff', border:'#A6CBF0' },
               ].map(c=>(
                 <div key={c.label} style={{ background:c.bg, border:`1.5px solid ${c.border}`, borderRadius:10, padding:'12px 16px', textAlign:'center', boxShadow:'0 1px 4px rgba(0,0,0,0.06)' }}>
-                  <div style={{ fontSize:10, color:'#6b7280', fontWeight:500, textTransform:'uppercase', letterSpacing:0.5, marginBottom:4 }}>{c.label}</div>
-                  <div style={{ fontSize:28, fontWeight:700, color:c.color, fontFamily:"'Barlow Condensed',sans-serif" }}>{c.val}</div>
+                  <div style={{ fontSize:10, color:'#5B6B7B', fontWeight:500, textTransform:'uppercase', letterSpacing:0.5, marginBottom:4 }}>{c.label}</div>
+                  <div style={{ fontSize:28, fontWeight:700, color:c.color, fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif" }}>{c.val}</div>
                 </div>
               ))}
             </div>
@@ -740,15 +740,15 @@ export default function Board({ session, selectedBU, onBack }) {
             {/* Date controls */}
             <div style={{ background:'white', borderRadius:10, padding:'12px 16px', display:'flex', alignItems:'center', justifyContent:'space-between', boxShadow:'0 1px 4px rgba(0,0,0,0.06)', marginBottom:12, flexWrap:'wrap', gap:10 }}>
               <div style={{ display:'flex', alignItems:'center', gap:8 }}>
-                <button onClick={()=>setCurDate(d=>nextWeekday(d,-1))} style={{ background:'#f3f4f6', border:'1.5px solid #e5e7eb', borderRadius:6, padding:'6px 14px', fontSize:14, cursor:'pointer', color:'#374151' }}>←</button>
-                <div style={{ background:'#f8fafc', border:'1.5px solid #e5e7eb', borderRadius:6, padding:'6px 18px', fontSize:13, fontWeight:600, color:NAVY, minWidth:210, textAlign:'center' }}>
+                <button onClick={()=>setCurDate(d=>nextWeekday(d,-1))} style={{ background:'#f3f4f6', border:'1.5px solid #E3E6EA', borderRadius:6, padding:'6px 14px', fontSize:14, cursor:'pointer', color:'#02355A' }}>←</button>
+                <div style={{ background:'#f8fafc', border:'1.5px solid #E3E6EA', borderRadius:6, padding:'6px 18px', fontSize:13, fontWeight:600, color:NAVY, minWidth:210, textAlign:'center' }}>
                   {fmtDate(curDate)}
                   {curDate===today&&<span style={{ marginLeft:8, fontSize:10, background:BLUE, color:'white', padding:'1px 6px', borderRadius:10 }}>TODAY</span>}
                 </div>
-                <button onClick={()=>setCurDate(d=>nextWeekday(d,1))} style={{ background:'#f3f4f6', border:'1.5px solid #e5e7eb', borderRadius:6, padding:'6px 14px', fontSize:14, cursor:'pointer', color:'#374151' }}>→</button>
-                <button onClick={()=>setCurDate(today)} style={{ background:'#eff6ff', border:'1.5px solid #93c5fd', borderRadius:6, padding:'6px 12px', fontSize:11, cursor:'pointer', color:BLUE, fontWeight:500 }}>Today</button>
+                <button onClick={()=>setCurDate(d=>nextWeekday(d,1))} style={{ background:'#f3f4f6', border:'1.5px solid #E3E6EA', borderRadius:6, padding:'6px 14px', fontSize:14, cursor:'pointer', color:'#02355A' }}>→</button>
+                <button onClick={()=>setCurDate(today)} style={{ background:'#eff6ff', border:'1.5px solid #A6CBF0', borderRadius:6, padding:'6px 12px', fontSize:11, cursor:'pointer', color:BLUE, fontWeight:500 }}>Today</button>
               </div>
-              <button onClick={saveSession} disabled={saving} style={{ background:saving?'#93c5fd':`linear-gradient(135deg,${BLUE},#0066cc)`, color:'white', border:'none', borderRadius:8, padding:'9px 22px', fontSize:13, fontWeight:600, cursor:saving?'default':'pointer', fontFamily:"'Barlow',sans-serif", boxShadow:saving?'none':'0 3px 12px rgba(0,75,147,0.35)', minWidth:140 }}>
+              <button onClick={saveSession} disabled={saving} style={{ background:saving?'#A6CBF0':`linear-gradient(135deg,${BLUE},#3680CE)`, color:'white', border:'none', borderRadius:8, padding:'9px 22px', fontSize:13, fontWeight:600, cursor:saving?'default':'pointer', fontFamily:"Gilroy,Arial,sans-serif", boxShadow:saving?'none':'0 3px 12px rgba(0,75,147,0.35)', minWidth:140 }}>
                 {saveMsg||(saving?'Saving...':'Save Session')}
               </button>
             </div>
@@ -757,7 +757,7 @@ export default function Board({ session, selectedBU, onBack }) {
             {GROUPS.map(g=>(
               <div key={g.label} style={{ background:'white', borderRadius:10, marginBottom:10, boxShadow:'0 1px 4px rgba(0,0,0,0.06)', overflow:'hidden' }}>
                 <div onClick={()=>setCollapsed(p=>({...p,[g.label]:!p[g.label]}))} style={{ background:`linear-gradient(135deg,${g.color},${BLUE})`, padding:'10px 16px', display:'flex', alignItems:'center', cursor:'pointer', userSelect:'none' }}>
-                  <span style={{ fontFamily:"'Barlow Condensed',sans-serif", fontSize:13, fontWeight:600, color:'white', letterSpacing:0.8, textTransform:'uppercase' }}>{g.label}</span>
+                  <span style={{ fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif", fontSize:13, fontWeight:600, color:'white', letterSpacing:0.8, textTransform:'uppercase' }}>{g.label}</span>
                   <span style={{ marginLeft:'auto', color:'rgba(255,255,255,0.7)', fontSize:11 }}>{collapsed[g.label]?'▶':'▼'}</span>
                 </div>
                 {!collapsed[g.label]&&(
@@ -783,31 +783,31 @@ export default function Board({ session, selectedBU, onBack }) {
                           <div>
                             <div style={{ fontSize:13, fontWeight:500, color:'#1f2937', lineHeight:1.3 }}>{kpi.name}</div>
                             <div style={{ fontSize:10, color:'#9ca3af', marginTop:2 }}>
-                              {kpi.uom} · <span style={{ color:'#6b7280' }}>{kpi.freq}</span>
-                              {kpiActions.length>0&&<span style={{ marginLeft:8, color:'#d97706', fontWeight:500 }}>{kpiActions.length} action{kpiActions.length>1?'s':''} open</span>}
+                              {kpi.uom} · <span style={{ color:'#5B6B7B' }}>{kpi.freq}</span>
+                              {kpiActions.length>0&&<span style={{ marginLeft:8, color:'#EB9F0A', fontWeight:500 }}>{kpiActions.length} action{kpiActions.length>1?'s':''} open</span>}
                             </div>
                           </div>
-                          <div style={{ textAlign:'center', fontSize:12, color:'#6b7280', fontWeight:500 }}>{kpi.target}</div>
+                          <div style={{ textAlign:'center', fontSize:12, color:'#5B6B7B', fontWeight:500 }}>{kpi.target}</div>
                           <div style={{ textAlign:'center' }}>
                             {kpi.tv===null?(
                               <span style={{ fontSize:11, color:'#9ca3af' }}>TBD</span>
                             ):(
                               <input type="number" value={val} placeholder="—" step="any"
                                 onChange={e=>setVals(p=>({...p,[kpi.id]:e.target.value}))}
-                                style={{ width:80, padding:'6px 8px', border:`1.5px solid ${s!=='empty'?stBorder(s):'#e5e7eb'}`, borderRadius:6, fontSize:13, fontWeight:600, textAlign:'center', outline:'none', background:s!=='empty'?stBg(s):'white', color:stColor(s), fontFamily:"'Barlow',sans-serif", transition:'all 0.15s' }}
+                                style={{ width:80, padding:'6px 8px', border:`1.5px solid ${s!=='empty'?stBorder(s):'#E3E6EA'}`, borderRadius:6, fontSize:13, fontWeight:600, textAlign:'center', outline:'none', background:s!=='empty'?stBg(s):'white', color:stColor(s), fontFamily:"Gilroy,Arial,sans-serif", transition:'all 0.15s' }}
                               />
                             )}
                           </div>
                           <div style={{ textAlign:'center' }}>
-                            <button onClick={()=>{ setRcModal(kpi); setRcForm(rc||{category:'',desc:'',recurring:false}) }} style={{ fontSize:11, padding:'5px 10px', border:`1.5px solid ${hasRc?'#fca5a5':'#e5e7eb'}`, borderRadius:6, cursor:'pointer', background:hasRc?'#fef2f2':'#f9fafb', color:hasRc?'#dc2626':'#6b7280', fontFamily:"'Barlow',sans-serif", fontWeight:500, whiteSpace:'nowrap' }}>
+                            <button onClick={()=>{ setRcModal(kpi); setRcForm(rc||{category:'',desc:'',recurring:false}) }} style={{ fontSize:11, padding:'5px 10px', border:`1.5px solid ${hasRc?'#F3B3BE':'#E3E6EA'}`, borderRadius:6, cursor:'pointer', background:hasRc?'#FCE8EB':'#f9fafb', color:hasRc?'#C8102E':'#5B6B7B', fontFamily:"Gilroy,Arial,sans-serif", fontWeight:500, whiteSpace:'nowrap' }}>
                               {hasRc?`✓ ${rc.category.split(' ')[0]}`:'+ Root cause'}
                             </button>
                           </div>
                           <div style={{ display:'flex', alignItems:'center', gap:6 }}>
-                            <div style={{ width:28, height:28, borderRadius:'50%', background:`linear-gradient(135deg,${BLUE},#0066cc)`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:10, fontWeight:700, color:'white', flexShrink:0 }} title={`${kpi.owner} / ${kpi.backup}`}>
+                            <div style={{ width:28, height:28, borderRadius:'50%', background:`linear-gradient(135deg,${BLUE},#3680CE)`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:10, fontWeight:700, color:'white', flexShrink:0 }} title={`${kpi.owner} / ${kpi.backup}`}>
                               {initials(kpi.owner)}
                             </div>
-                            <div style={{ fontSize:10, color:'#6b7280', lineHeight:1.2 }}>
+                            <div style={{ fontSize:10, color:'#5B6B7B', lineHeight:1.2 }}>
                               <div style={{ fontWeight:500 }}>{kpi.owner.split(' ')[0]}</div>
                               <div style={{ color:'#9ca3af' }}>bkp: {kpi.backup.split(' ')[0]}</div>
                             </div>
@@ -827,10 +827,10 @@ export default function Board({ session, selectedBU, onBack }) {
           <div>
             <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:14 }}>
               <div>
-                <h2 style={{ fontSize:18, fontWeight:700, color:NAVY, fontFamily:"'Barlow Condensed',sans-serif" }}>Action Tracker</h2>
-                <p style={{ fontSize:12, color:'#6b7280', marginTop:2 }}>{openActions.length} open · {overdueActions.length} overdue · {agingCount} aging (5+ days)</p>
+                <h2 style={{ fontSize:18, fontWeight:700, color:NAVY, fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif" }}>Action Tracker</h2>
+                <p style={{ fontSize:12, color:'#5B6B7B', marginTop:2 }}>{openActions.length} open · {overdueActions.length} overdue · {agingCount} aging (5+ days)</p>
               </div>
-              <button onClick={()=>setActModal(true)} style={{ background:`linear-gradient(135deg,${BLUE},#0066cc)`, color:'white', border:'none', borderRadius:8, padding:'10px 18px', fontSize:13, fontWeight:600, cursor:'pointer', fontFamily:"'Barlow',sans-serif", boxShadow:'0 3px 12px rgba(0,75,147,0.35)' }}>+ Add action</button>
+              <button onClick={()=>setActModal(true)} style={{ background:`linear-gradient(135deg,${BLUE},#3680CE)`, color:'white', border:'none', borderRadius:8, padding:'10px 18px', fontSize:13, fontWeight:600, cursor:'pointer', fontFamily:"Gilroy,Arial,sans-serif", boxShadow:'0 3px 12px rgba(0,75,147,0.35)' }}>+ Add action</button>
             </div>
             <div style={{ background:'white', borderRadius:10, boxShadow:'0 1px 4px rgba(0,0,0,0.06)', overflow:'hidden' }}>
               <table style={{ width:'100%', borderCollapse:'collapse', fontSize:13 }}>
@@ -848,21 +848,21 @@ export default function Board({ session, selectedBU, onBack }) {
                     const disp=overdue?'Overdue':a.status
                     const days=a.created_at?Math.floor((new Date()-new Date(a.created_at+'T00:00:00'))/86400000):0
                     const aging=a.status!=='Done'&&days>=5
-                    const stB=disp==='Done'?['#f0fdf4','#16a34a']:disp==='Overdue'?['#fef2f2','#dc2626']:['#fffbeb','#d97706']
+                    const stB=disp==='Done'?['#EEF6E0','#5D910D']:disp==='Overdue'?['#FCE8EB','#C8102E']:['#FFF6DE','#EB9F0A']
                     return (
-                      <tr key={a.id} style={{ borderBottom:'1px solid #f3f4f6', background:aging&&disp!=='Done'?'#fffbeb':'white' }}
+                      <tr key={a.id} style={{ borderBottom:'1px solid #f3f4f6', background:aging&&disp!=='Done'?'#FFF6DE':'white' }}
                         onMouseEnter={e=>e.currentTarget.style.background='#f9fafb'}
-                        onMouseLeave={e=>e.currentTarget.style.background=aging&&disp!=='Done'?'#fffbeb':'white'}>
+                        onMouseLeave={e=>e.currentTarget.style.background=aging&&disp!=='Done'?'#FFF6DE':'white'}>
                         <td style={{ padding:'10px 14px', fontWeight:500, color:'#1f2937', maxWidth:240 }}>{a.description}</td>
-                        <td style={{ padding:'10px 14px', color:'#6b7280', fontSize:12 }}>{a.kpi_ref||'—'}</td>
-                        <td style={{ padding:'10px 14px', color:'#374151' }}>{a.owner}</td>
-                        <td style={{ padding:'10px 14px', color:'#6b7280', fontSize:12 }}>{a.due_date||'—'}</td>
-                        <td style={{ padding:'10px 14px', fontSize:12, fontWeight:600, color:a.priority==='High'?'#dc2626':a.priority==='Medium'?'#d97706':'#16a34a' }}>{a.priority}</td>
+                        <td style={{ padding:'10px 14px', color:'#5B6B7B', fontSize:12 }}>{a.kpi_ref||'—'}</td>
+                        <td style={{ padding:'10px 14px', color:'#02355A' }}>{a.owner}</td>
+                        <td style={{ padding:'10px 14px', color:'#5B6B7B', fontSize:12 }}>{a.due_date||'—'}</td>
+                        <td style={{ padding:'10px 14px', fontSize:12, fontWeight:600, color:a.priority==='High'?'#C8102E':a.priority==='Medium'?'#EB9F0A':'#5D910D' }}>{a.priority}</td>
                         <td style={{ padding:'10px 14px' }}><span style={{ fontSize:11, padding:'3px 10px', borderRadius:12, background:stB[0], color:stB[1], fontWeight:600 }}>{disp}</span></td>
-                        <td style={{ padding:'10px 14px', color:aging?'#d97706':'#9ca3af', fontSize:12, fontWeight:aging?600:400 }}>{days}d{aging?' ⚠️':''}</td>
+                        <td style={{ padding:'10px 14px', color:aging?'#EB9F0A':'#9ca3af', fontSize:12, fontWeight:aging?600:400 }}>{days}d{aging?' ⚠️':''}</td>
                         <td style={{ padding:'10px 14px', display:'flex', gap:6 }}>
-                          {a.status!=='Done'&&<button onClick={()=>markDone(a.id)} style={{ fontSize:11, padding:'3px 8px', border:'1px solid #86efac', borderRadius:4, cursor:'pointer', background:'#f0fdf4', color:'#16a34a' }}>✓</button>}
-                          <button onClick={()=>deleteAction(a.id)} style={{ fontSize:11, padding:'3px 8px', border:'1px solid #fca5a5', borderRadius:4, cursor:'pointer', background:'#fef2f2', color:'#dc2626' }}>✕</button>
+                          {a.status!=='Done'&&<button onClick={()=>markDone(a.id)} style={{ fontSize:11, padding:'3px 8px', border:'1px solid #BFDE7D', borderRadius:4, cursor:'pointer', background:'#EEF6E0', color:'#5D910D' }}>✓</button>}
+                          <button onClick={()=>deleteAction(a.id)} style={{ fontSize:11, padding:'3px 8px', border:'1px solid #F3B3BE', borderRadius:4, cursor:'pointer', background:'#FCE8EB', color:'#C8102E' }}>✕</button>
                         </td>
                       </tr>
                     )
@@ -877,12 +877,23 @@ export default function Board({ session, selectedBU, onBack }) {
         {tab==='trends'&&(
           <div>
             <div style={{ marginBottom:16 }}>
-              <h2 style={{ fontSize:18, fontWeight:700, color:NAVY, fontFamily:"'Barlow Condensed',sans-serif" }}>Trends & Analysis</h2>
-              <p style={{ fontSize:12, color:'#6b7280', marginTop:2 }}>Last 30 working days · RAG-coloured bars · 7-day rolling average · dashed target</p>
+              <h2 style={{ fontSize:18, fontWeight:700, color:NAVY, fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif" }}>Trends & Analysis</h2>
+              <p style={{ fontSize:12, color:'#5B6B7B', marginTop:2 }}>Last 30 working days · RAG-coloured bars · 7-day rolling average · dashed target</p>
             </div>
 
+            <InsightsPanel
+              GROUPS={GROUPS}
+              sessions={sessions}
+              kpiValues={sessions.flatMap(s => Object.entries(s.values || {}).map(([kpi_id, value]) => ({ session_id: s.id, kpi_id, value })))}
+              rootCauses={sessions.flatMap(s => Object.entries(s.rootCauses || {}).map(([kpi_id, r]) => ({ ...r, session_id: s.id, kpi_id })))}
+              actions={actions}
+              curDate={curDate}
+              buName={selectedBU ? `${selectedBU.country} ${selectedBU.bu}` : 'Poland Beverages'}
+              statusFn={getStatus}
+            />
+
             {sessions.length < 3 && (
-              <div style={{ background:'#fffbeb', border:'1px solid #fcd34d', borderRadius:10, padding:24, textAlign:'center', color:'#92400e', marginBottom:16 }}>
+              <div style={{ background:'#FFF6DE', border:'1px solid #FFE8AD', borderRadius:10, padding:24, textAlign:'center', color:'#954F09', marginBottom:16 }}>
                 <div style={{ fontSize:14, fontWeight:600, marginBottom:4 }}>Not enough data yet</div>
                 <div style={{ fontSize:13 }}>Save at least 3 sessions or run the Import Data tool to populate trends.</div>
               </div>
@@ -892,29 +903,29 @@ export default function Board({ session, selectedBU, onBack }) {
               <>
                 {/* KPI Health Heatmap */}
                 <div style={{ background:'white', borderRadius:10, padding:16, boxShadow:'0 1px 4px rgba(0,0,0,0.06)', marginBottom:14 }}>
-                  <div style={{ fontFamily:"'Barlow Condensed',sans-serif", fontSize:15, fontWeight:700, color:NAVY, marginBottom:4 }}>KPI Health Heatmap</div>
-                  <div style={{ fontSize:11, color:'#6b7280', marginBottom:12 }}>Last 14 sessions · ✓ green · ~ amber · ✕ red · · empty</div>
+                  <div style={{ fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif", fontSize:15, fontWeight:700, color:NAVY, marginBottom:4 }}>KPI Health Heatmap</div>
+                  <div style={{ fontSize:11, color:'#5B6B7B', marginBottom:12 }}>Last 14 sessions · ✓ green · ~ amber · ✕ red · · empty</div>
                   <HeatmapChart sessions={sessions}/>
                 </div>
 
                 {/* Worst Offenders + Streak side by side */}
                 <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14, marginBottom:14 }}>
                   <div style={{ background:'white', borderRadius:10, padding:16, boxShadow:'0 1px 4px rgba(0,0,0,0.06)' }}>
-                    <div style={{ fontFamily:"'Barlow Condensed',sans-serif", fontSize:15, fontWeight:700, color:NAVY, marginBottom:4 }}>Worst Offenders</div>
-                    <div style={{ fontSize:11, color:'#6b7280', marginBottom:12 }}>% days red in last 30 sessions</div>
+                    <div style={{ fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif", fontSize:15, fontWeight:700, color:NAVY, marginBottom:4 }}>Worst Offenders</div>
+                    <div style={{ fontSize:11, color:'#5B6B7B', marginBottom:12 }}>% days red in last 30 sessions</div>
                     <WorstOffenders sessions={sessions}/>
                   </div>
                   <div style={{ background:'white', borderRadius:10, padding:16, boxShadow:'0 1px 4px rgba(0,0,0,0.06)' }}>
-                    <div style={{ fontFamily:"'Barlow Condensed',sans-serif", fontSize:15, fontWeight:700, color:NAVY, marginBottom:4 }}>Streak Tracker</div>
-                    <div style={{ fontSize:11, color:'#6b7280', marginBottom:12 }}>Consecutive days same RAG status</div>
+                    <div style={{ fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif", fontSize:15, fontWeight:700, color:NAVY, marginBottom:4 }}>Streak Tracker</div>
+                    <div style={{ fontSize:11, color:'#5B6B7B', marginBottom:12 }}>Consecutive days same RAG status</div>
                     <StreakTracker sessions={sessions}/>
                   </div>
                 </div>
 
                 {/* RC Analytics */}
                 <div style={{ background:'white', borderRadius:10, padding:16, boxShadow:'0 1px 4px rgba(0,0,0,0.06)', marginBottom:14 }}>
-                  <div style={{ fontFamily:"'Barlow Condensed',sans-serif", fontSize:15, fontWeight:700, color:NAVY, marginBottom:4 }}>Root Cause Analytics</div>
-                  <div style={{ fontSize:11, color:'#6b7280', marginBottom:12 }}>Category distribution across all red KPI sessions</div>
+                  <div style={{ fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif", fontSize:15, fontWeight:700, color:NAVY, marginBottom:4 }}>Root Cause Analytics</div>
+                  <div style={{ fontSize:11, color:'#5B6B7B', marginBottom:12 }}>Category distribution across all red KPI sessions</div>
                   <RCAnalytics sessions={sessions}/>
                 </div>
 
@@ -923,12 +934,12 @@ export default function Board({ session, selectedBU, onBack }) {
                   <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
                     {[
                       { id:'psa_m', color:BLUE },
-                      { id:'psa_z', color:'#0066cc' },
-                      { id:'oos_i', color:'#dc2626' },
-                      { id:'rmso_total', color:'#d97706' },
-                      { id:'scr', color:'#7c3aed' },
-                      { id:'unmet_cs', color:'#059669' },
-                      { id:'rm_conc', color:'#db2777' },
+                      { id:'psa_z', color:'#3680CE' },
+                      { id:'oos_i', color:'#C8102E' },
+                      { id:'rmso_total', color:'#EB9F0A' },
+                      { id:'scr', color:'#155798' },
+                      { id:'unmet_cs', color:'#0F440E' },
+                      { id:'rm_conc', color:'#954F09' },
                       { id:'rm_open', color:'#0891b2' },
                     ].map(({ id, color })=>{
                       const kpi=ALL_KPIS.find(k=>k.id===id)
@@ -962,8 +973,8 @@ export default function Board({ session, selectedBU, onBack }) {
         {tab==='log'&&(
           <div>
             <div style={{ marginBottom:16 }}>
-              <h2 style={{ fontSize:18, fontWeight:700, color:NAVY, fontFamily:"'Barlow Condensed',sans-serif" }}>Session Log</h2>
-              <p style={{ fontSize:12, color:'#6b7280', marginTop:2 }}>{sessions.length} sessions saved</p>
+              <h2 style={{ fontSize:18, fontWeight:700, color:NAVY, fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif" }}>Session Log</h2>
+              <p style={{ fontSize:12, color:'#5B6B7B', marginTop:2 }}>{sessions.length} sessions saved</p>
             </div>
             {!sessions.length&&<div style={{ background:'white', borderRadius:10, padding:40, textAlign:'center', color:'#9ca3af', boxShadow:'0 1px 4px rgba(0,0,0,0.06)' }}>No sessions saved yet.</div>}
             <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
@@ -978,11 +989,11 @@ export default function Board({ session, selectedBU, onBack }) {
                       <div style={{ fontSize:11, color:'#9ca3af', marginTop:2 }}>by {s.owner||'unknown'}</div>
                     </div>
                     <div style={{ display:'flex', gap:8 }}>
-                      <span style={{ fontSize:11, padding:'3px 10px', borderRadius:12, background:'#fef2f2', color:'#dc2626', fontWeight:600 }}>{reds} red</span>
-                      <span style={{ fontSize:11, padding:'3px 10px', borderRadius:12, background:'#f0fdf4', color:'#16a34a', fontWeight:600 }}>{greens} green</span>
+                      <span style={{ fontSize:11, padding:'3px 10px', borderRadius:12, background:'#FCE8EB', color:'#C8102E', fontWeight:600 }}>{reds} red</span>
+                      <span style={{ fontSize:11, padding:'3px 10px', borderRadius:12, background:'#EEF6E0', color:'#5D910D', fontWeight:600 }}>{greens} green</span>
                     </div>
                     {isToday&&<span style={{ fontSize:10, padding:'2px 8px', borderRadius:10, background:BLUE, color:'white', fontWeight:600 }}>TODAY</span>}
-                    <button onClick={()=>{ setCurDate(s.date); setTab('board') }} style={{ marginLeft:'auto', fontSize:12, padding:'6px 14px', border:'1.5px solid #e5e7eb', borderRadius:6, cursor:'pointer', background:'#f9fafb', color:'#374151', fontFamily:"'Barlow',sans-serif" }}>Load →</button>
+                    <button onClick={()=>{ setCurDate(s.date); setTab('board') }} style={{ marginLeft:'auto', fontSize:12, padding:'6px 14px', border:'1.5px solid #E3E6EA', borderRadius:6, cursor:'pointer', background:'#f9fafb', color:'#02355A', fontFamily:"Gilroy,Arial,sans-serif" }}>Load →</button>
                   </div>
                 )
               })}
@@ -998,26 +1009,26 @@ export default function Board({ session, selectedBU, onBack }) {
       {rcModal&&(
         <div style={{ position:'fixed', inset:0, background:'rgba(0,26,64,0.6)', display:'flex', alignItems:'center', justifyContent:'center', zIndex:99, padding:20 }}>
           <div style={{ background:'white', borderRadius:16, padding:28, width:420, maxWidth:'100%', boxShadow:'0 24px 64px rgba(0,0,0,0.3)' }}>
-            <h3 style={{ fontSize:16, fontWeight:700, color:NAVY, marginBottom:4, fontFamily:"'Barlow Condensed',sans-serif" }}>Root Cause Analysis</h3>
-            <p style={{ fontSize:12, color:'#6b7280', marginBottom:20 }}>{rcModal.name}</p>
+            <h3 style={{ fontSize:16, fontWeight:700, color:NAVY, marginBottom:4, fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif" }}>Root Cause Analysis</h3>
+            <p style={{ fontSize:12, color:'#5B6B7B', marginBottom:20 }}>{rcModal.name}</p>
             <div style={{ marginBottom:14 }}>
-              <label style={{ display:'block', fontSize:11, fontWeight:600, color:'#374151', marginBottom:6, textTransform:'uppercase', letterSpacing:0.5 }}>Category *</label>
-              <select value={rcForm.category} onChange={e=>setRcForm(p=>({...p,category:e.target.value}))} style={{ width:'100%', padding:'10px 12px', fontSize:13, border:'1.5px solid #e5e7eb', borderRadius:8, fontFamily:"'Barlow',sans-serif", outline:'none' }}>
+              <label style={{ display:'block', fontSize:11, fontWeight:600, color:'#02355A', marginBottom:6, textTransform:'uppercase', letterSpacing:0.5 }}>Category *</label>
+              <select value={rcForm.category} onChange={e=>setRcForm(p=>({...p,category:e.target.value}))} style={{ width:'100%', padding:'10px 12px', fontSize:13, border:'1.5px solid #E3E6EA', borderRadius:8, fontFamily:"Gilroy,Arial,sans-serif", outline:'none' }}>
                 <option value="">Select category…</option>
                 {RC_CATS.map(c=><option key={c}>{c}</option>)}
               </select>
             </div>
             <div style={{ marginBottom:14 }}>
-              <label style={{ display:'block', fontSize:11, fontWeight:600, color:'#374151', marginBottom:6, textTransform:'uppercase', letterSpacing:0.5 }}>Description & corrective action</label>
-              <textarea value={rcForm.desc} onChange={e=>setRcForm(p=>({...p,desc:e.target.value}))} rows={3} placeholder="What caused this? What is the corrective action?" style={{ width:'100%', padding:'10px 12px', fontSize:13, border:'1.5px solid #e5e7eb', borderRadius:8, fontFamily:"'Barlow',sans-serif", resize:'vertical', outline:'none' }}/>
+              <label style={{ display:'block', fontSize:11, fontWeight:600, color:'#02355A', marginBottom:6, textTransform:'uppercase', letterSpacing:0.5 }}>Description & corrective action</label>
+              <textarea value={rcForm.desc} onChange={e=>setRcForm(p=>({...p,desc:e.target.value}))} rows={3} placeholder="What caused this? What is the corrective action?" style={{ width:'100%', padding:'10px 12px', fontSize:13, border:'1.5px solid #E3E6EA', borderRadius:8, fontFamily:"Gilroy,Arial,sans-serif", resize:'vertical', outline:'none' }}/>
             </div>
             <div style={{ marginBottom:20, display:'flex', alignItems:'center', gap:8 }}>
               <input type="checkbox" id="recur" checked={rcForm.recurring} onChange={e=>setRcForm(p=>({...p,recurring:e.target.checked}))} style={{ width:16, height:16 }}/>
-              <label htmlFor="recur" style={{ fontSize:13, color:'#374151', cursor:'pointer' }}>This is a recurring issue</label>
+              <label htmlFor="recur" style={{ fontSize:13, color:'#02355A', cursor:'pointer' }}>This is a recurring issue</label>
             </div>
             <div style={{ display:'flex', gap:10, justifyContent:'flex-end' }}>
-              <button onClick={()=>setRcModal(null)} style={{ fontSize:13, padding:'9px 18px', border:'1.5px solid #e5e7eb', borderRadius:8, cursor:'pointer', background:'white', color:'#374151', fontFamily:"'Barlow',sans-serif" }}>Cancel</button>
-              <button onClick={saveRc} style={{ fontSize:13, padding:'9px 18px', background:`linear-gradient(135deg,${BLUE},#0066cc)`, color:'white', border:'none', borderRadius:8, cursor:'pointer', fontFamily:"'Barlow',sans-serif", fontWeight:600 }}>Save root cause</button>
+              <button onClick={()=>setRcModal(null)} style={{ fontSize:13, padding:'9px 18px', border:'1.5px solid #E3E6EA', borderRadius:8, cursor:'pointer', background:'white', color:'#02355A', fontFamily:"Gilroy,Arial,sans-serif" }}>Cancel</button>
+              <button onClick={saveRc} style={{ fontSize:13, padding:'9px 18px', background:`linear-gradient(135deg,${BLUE},#3680CE)`, color:'white', border:'none', borderRadius:8, cursor:'pointer', fontFamily:"Gilroy,Arial,sans-serif", fontWeight:600 }}>Save root cause</button>
             </div>
           </div>
         </div>
@@ -1027,28 +1038,28 @@ export default function Board({ session, selectedBU, onBack }) {
       {actModal&&(
         <div style={{ position:'fixed', inset:0, background:'rgba(0,26,64,0.6)', display:'flex', alignItems:'center', justifyContent:'center', zIndex:99, padding:20 }}>
           <div style={{ background:'white', borderRadius:16, padding:28, width:440, maxWidth:'100%', boxShadow:'0 24px 64px rgba(0,0,0,0.3)' }}>
-            <h3 style={{ fontSize:16, fontWeight:700, color:NAVY, marginBottom:20, fontFamily:"'Barlow Condensed',sans-serif" }}>Add New Action</h3>
+            <h3 style={{ fontSize:16, fontWeight:700, color:NAVY, marginBottom:20, fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif" }}>Add New Action</h3>
             <div style={{ marginBottom:14 }}>
-              <label style={{ display:'block', fontSize:11, fontWeight:600, color:'#374151', marginBottom:6, textTransform:'uppercase', letterSpacing:0.5 }}>Action description *</label>
-              <textarea value={newAct.desc} onChange={e=>setNewAct(p=>({...p,desc:e.target.value}))} rows={2} placeholder="What needs to happen?" style={{ width:'100%', padding:'10px 12px', fontSize:13, border:'1.5px solid #e5e7eb', borderRadius:8, fontFamily:"'Barlow',sans-serif", resize:'none', outline:'none' }}/>
+              <label style={{ display:'block', fontSize:11, fontWeight:600, color:'#02355A', marginBottom:6, textTransform:'uppercase', letterSpacing:0.5 }}>Action description *</label>
+              <textarea value={newAct.desc} onChange={e=>setNewAct(p=>({...p,desc:e.target.value}))} rows={2} placeholder="What needs to happen?" style={{ width:'100%', padding:'10px 12px', fontSize:13, border:'1.5px solid #E3E6EA', borderRadius:8, fontFamily:"Gilroy,Arial,sans-serif", resize:'none', outline:'none' }}/>
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12, marginBottom:14 }}>
               {[{label:'Owner',key:'owner',type:'text',ph:'Name'},{label:'Due date',key:'due',type:'date',ph:''},{label:'KPI reference',key:'kpiRef',type:'text',ph:'e.g. PSA, OOS…'}].map(f=>(
                 <div key={f.key}>
-                  <label style={{ display:'block', fontSize:11, fontWeight:600, color:'#374151', marginBottom:6, textTransform:'uppercase', letterSpacing:0.5 }}>{f.label}</label>
-                  <input type={f.type} value={newAct[f.key]} placeholder={f.ph} onChange={e=>setNewAct(p=>({...p,[f.key]:e.target.value}))} style={{ width:'100%', padding:'9px 12px', fontSize:13, border:'1.5px solid #e5e7eb', borderRadius:8, fontFamily:"'Barlow',sans-serif", outline:'none' }}/>
+                  <label style={{ display:'block', fontSize:11, fontWeight:600, color:'#02355A', marginBottom:6, textTransform:'uppercase', letterSpacing:0.5 }}>{f.label}</label>
+                  <input type={f.type} value={newAct[f.key]} placeholder={f.ph} onChange={e=>setNewAct(p=>({...p,[f.key]:e.target.value}))} style={{ width:'100%', padding:'9px 12px', fontSize:13, border:'1.5px solid #E3E6EA', borderRadius:8, fontFamily:"Gilroy,Arial,sans-serif", outline:'none' }}/>
                 </div>
               ))}
               <div>
-                <label style={{ display:'block', fontSize:11, fontWeight:600, color:'#374151', marginBottom:6, textTransform:'uppercase', letterSpacing:0.5 }}>Priority</label>
-                <select value={newAct.priority} onChange={e=>setNewAct(p=>({...p,priority:e.target.value}))} style={{ width:'100%', padding:'9px 12px', fontSize:13, border:'1.5px solid #e5e7eb', borderRadius:8, fontFamily:"'Barlow',sans-serif", outline:'none' }}>
+                <label style={{ display:'block', fontSize:11, fontWeight:600, color:'#02355A', marginBottom:6, textTransform:'uppercase', letterSpacing:0.5 }}>Priority</label>
+                <select value={newAct.priority} onChange={e=>setNewAct(p=>({...p,priority:e.target.value}))} style={{ width:'100%', padding:'9px 12px', fontSize:13, border:'1.5px solid #E3E6EA', borderRadius:8, fontFamily:"Gilroy,Arial,sans-serif", outline:'none' }}>
                   <option>High</option><option>Medium</option><option>Low</option>
                 </select>
               </div>
             </div>
             <div style={{ display:'flex', gap:10, justifyContent:'flex-end' }}>
-              <button onClick={()=>setActModal(false)} style={{ fontSize:13, padding:'9px 18px', border:'1.5px solid #e5e7eb', borderRadius:8, cursor:'pointer', background:'white', color:'#374151', fontFamily:"'Barlow',sans-serif" }}>Cancel</button>
-              <button onClick={saveAction} style={{ fontSize:13, padding:'9px 18px', background:`linear-gradient(135deg,${BLUE},#0066cc)`, color:'white', border:'none', borderRadius:8, cursor:'pointer', fontFamily:"'Barlow',sans-serif", fontWeight:600, boxShadow:'0 3px 12px rgba(0,75,147,0.35)' }}>Save action</button>
+              <button onClick={()=>setActModal(false)} style={{ fontSize:13, padding:'9px 18px', border:'1.5px solid #E3E6EA', borderRadius:8, cursor:'pointer', background:'white', color:'#02355A', fontFamily:"Gilroy,Arial,sans-serif" }}>Cancel</button>
+              <button onClick={saveAction} style={{ fontSize:13, padding:'9px 18px', background:`linear-gradient(135deg,${BLUE},#3680CE)`, color:'white', border:'none', borderRadius:8, cursor:'pointer', fontFamily:"Gilroy,Arial,sans-serif", fontWeight:600, boxShadow:'0 3px 12px rgba(0,75,147,0.35)' }}>Save action</button>
             </div>
           </div>
         </div>

@@ -1,0 +1,75 @@
+/* PepsiCo brand base styles - replace the contents of src/index.css with this file
+   (or import it at the top of main.jsx: import './brand/pepsico.css').
+   Font files are licensed: download GT Pressura and Gilroy from the PepsiCo brand portal
+   and place them in /public/fonts/. Until then the Arial fallbacks are used. */
+
+@font-face {
+  font-family: "GT Pressura";
+  src: url("/fonts/GT-Pressura-Standard-Black.woff2") format("woff2");
+  font-weight: 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url("/fonts/Gilroy-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url("/fonts/Gilroy-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+:root {
+  --pep-navy: #02355A;
+  --pep-blue-400: #155798;
+  --pep-blue-300: #3680CE;
+  --pep-blue-100: #A6CBF0;
+  --pep-yellow-500: #954F09;
+  --pep-yellow-300: #EB9F0A;
+  --pep-yellow-100: #FFE8AD;
+  --pep-green-500: #0F440E;
+  --pep-green-300: #5D910D;
+  --pep-green-100: #BFDE7D;
+  --pep-off-white: #F6F4F1;
+  --pep-line: #E3E6EA;
+  --pep-red: #C8102E;
+  --font-head: "GT Pressura", "Arial Narrow", Arial, sans-serif;
+  --font-body: Gilroy, Arial, Helvetica, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root {
+  margin: 0;
+  background: var(--pep-off-white);
+  color: var(--pep-navy);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-head);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--pep-navy);
+}
+
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--pep-blue-300);
+  outline-offset: 2px;
+}
+
+/* ---------- Print / PDF view of the board (used by printBoard()) ---------- */
+@media print {
+  @page { size: A4 landscape; margin: 10mm; }
+  body, #root { background: #fff !important; }
+  .no-print, nav, button { display: none !important; }
+  .print-only { display: block !important; }
+  .print-break { page-break-before: always; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; box-shadow: none !important; }
+}
+.print-only { display: none; }
