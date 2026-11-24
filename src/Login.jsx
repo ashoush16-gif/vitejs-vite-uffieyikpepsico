@@ -1,17 +1,7 @@
 import { useState } from 'react'
 import { supabase } from './supabaseClient'
 
-const PepsiCoSVG = () => (
-  <svg height="42" viewBox="0 0 320 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="40" cy="40" r="36" fill="white" fillOpacity="0.95"/>
-    <path d="M40 6 C28 12 18 25 18 40 C18 55 28 68 40 74" stroke="#155798" strokeWidth="2.5" fill="none"/>
-    <path d="M40 6 C52 12 62 25 62 40 C62 55 52 68 40 74" stroke="#E31837" strokeWidth="2.5" fill="none"/>
-    <line x1="4" y1="40" x2="76" y2="40" stroke="#9ca3af" strokeWidth="1.5"/>
-    <line x1="8" y1="24" x2="72" y2="24" stroke="#9ca3af" strokeWidth="1"/>
-    <line x1="8" y1="56" x2="72" y2="56" stroke="#9ca3af" strokeWidth="1"/>
-    <text x="88" y="56" fontFamily="Arial Black, Arial, sans-serif" fontSize="48" fontWeight="900" fill="white" letterSpacing="-1">pepsico</text>
-  </svg>
-)
+import PepsiCoLogo from './brand/PepsiCoLogo'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -55,7 +45,7 @@ export default function Login() {
             background: 'rgba(255,255,255,0.1)', borderRadius: 14,
             padding: '12px 24px', border: '1px solid rgba(255,255,255,0.2)',
           }}>
-            <PepsiCoSVG />
+            <PepsiCoLogo height={52} />
           </div>
         </div>
 

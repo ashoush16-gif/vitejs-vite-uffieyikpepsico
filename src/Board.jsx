@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { supabase } from './supabaseClient'
 import { stColor, stBg, stBorder } from './brand/pepsicoTheme'
 import InsightsPanel from './dds/InsightsPanel'
+import PepsiCoLogo from './brand/PepsiCoLogo'
 
 const BLUE = '#155798'
 const NAVY = '#02355A'
@@ -684,6 +685,8 @@ export default function Board({ session, selectedBU, onBack }) {
                   ← Hub
                 </button>
               )}
+              <PepsiCoLogo height={38} />
+              <div style={{ width:1, height:32, background:'rgba(255,255,255,0.25)' }} />
               <div>
                 <div style={{ fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif", fontSize:16, fontWeight:700, color:'white', letterSpacing:1 }}>
                   DAILY DIRECTION SETTING

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
+import PepsiCoLogo from './brand/PepsiCoLogo'
 
 const NAVY = '#02355A'
 const BLUE = '#155798'
@@ -47,19 +48,6 @@ function fmtDate(str) {
   })
 }
 
-function PepsiCoSVG() {
-  return (
-    <svg height="36" viewBox="0 0 320 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="40" cy="40" r="36" fill="white" fillOpacity="0.95"/>
-      <path d="M40 6 C28 12 18 25 18 40 C18 55 28 68 40 74" stroke="#155798" strokeWidth="2.5" fill="none"/>
-      <path d="M40 6 C52 12 62 25 62 40 C62 55 52 68 40 74" stroke="#E31837" strokeWidth="2.5" fill="none"/>
-      <line x1="4" y1="40" x2="76" y2="40" stroke="#9ca3af" strokeWidth="1.5"/>
-      <line x1="8" y1="24" x2="72" y2="24" stroke="#9ca3af" strokeWidth="1"/>
-      <line x1="8" y1="56" x2="72" y2="56" stroke="#9ca3af" strokeWidth="1"/>
-      <text x="88" y="56" fontFamily="Arial Black, Arial, sans-serif" fontSize="48" fontWeight="900" fill="white" letterSpacing="-1">pepsico</text>
-    </svg>
-  )
-}
 
 function PepsiGlobe({ size = 40 }) {
   return (
@@ -132,7 +120,7 @@ export default function Hub({ session, onSelectBU }) {
       {/* Header */}
       <div style={{ background: `linear-gradient(135deg, ${NAVY} 0%, ${BLUE} 100%)`, boxShadow: '0 2px 20px rgba(0,0,0,0.2)' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <PepsiCoSVG />
+          <PepsiCoLogo height={44} />
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <div style={{ textAlign: 'right' }}>
               <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)' }}>{session.user.email}</div>
