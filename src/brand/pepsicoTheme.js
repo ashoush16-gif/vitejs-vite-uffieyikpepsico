@@ -28,10 +28,9 @@ export const B = {
 }
 
 export const FONT = {
-  // GT Pressura & Gilroy are licensed PepsiCo brand fonts - add the files under /public/fonts
-  // (see pepsico.css). The fallbacks keep the layout stable if they are missing.
-  head: '"GT Pressura", "Arial Narrow", Arial, sans-serif',
-  body: 'Gilroy, Arial, Helvetica, sans-serif',
+  // Brand fonts are defined in pepsico.css (local installed fonts first).
+  head: '"PepsiCo Head", "GT Pressura LCG Black", Arial, sans-serif',
+  body: '"PepsiCo Body", Gilroy, Arial, Helvetica, sans-serif',
 }
 
 // Drop-in replacements for the existing stColor / stBg / stBorder in Board.jsx

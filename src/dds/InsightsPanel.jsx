@@ -11,7 +11,7 @@ import { exportWorkbook, exportCsv, kpiLongRows, printBoard } from './exportData
 
 function Tile({ label, value, sub, tone = 'navy' }) {
   const bg = tone === 'green' ? B.green300 : tone === 'amber' ? B.yellow300 : tone === 'red' ? B.red : B.navy
-  const fg = tone === 'amber' ? B.yellow500 : B.white
+  const fg = tone === 'amber' ? B.navy : B.white
   return (
     <div style={{ background: bg, color: fg, borderRadius: 14, padding: '14px 16px', minWidth: 0 }}>
       <div style={{ fontFamily: FONT.head, textTransform: 'uppercase', fontSize: 11, letterSpacing: 0.6, opacity: 0.9 }}>{label}</div>
@@ -25,18 +25,28 @@ const band = (p, green = 90, amber = 75) => (p >= green ? 'green' : p >= amber ?
 
 export default function InsightsPanel({ GROUPS, sessions, kpiValues, rootCauses, actions, curDate, buName = 'DDS', statusFn = getStatus }) {
   const [busy, setBusy] = useState(false)
-  const today = useMemo(() => new Date((curDate || new Date().toISOString().slice(0, 10)) + 'T00:00:00'), [curDate])
+  const today = useMemo(() => new Date(), [])
+
+  // Score the selected day if it has a saved session; otherwise the latest saved session before it
+  const scoreSession = useMemo(() => {
+    const kpiById = Object.fromEntries(GROUPS.flatMap((g) => g.kpis).map((k) => [k.id, k]))
+    const filled = new Set((kpiValues || []).filter((r) => kpiById[r.kpi_id] && statusFn(kpiById[r.kpi_id], r.value) !== 'empty').map((r) => r.session_id))
+    const sorted = [...(sessions || [])].filter((s) => filled.has(s.id)).sort((a, b) => (a.date < b.date ? -1 : 1))
+    return sorted.find((s) => s.date === curDate) || [...sorted].reverse().find((s) => !curDate || s.date <= curDate) || sorted[sorted.length - 1] || null
+  }, [GROUPS, sessions, kpiValues, curDate, statusFn])
+  const scoreDate = scoreSession?.date || curDate
+  const isFallback = !!scoreSession && scoreSession.date !== curDate
 
   const data = useMemo(() => {
     const vbs = valuesBySession(kpiValues)
-    const cur = (sessions || []).find((s) => s.date === curDate)
+    const asOf = new Date((scoreDate || today.toISOString().slice(0, 10)) + 'T00:00:00')
     return {
-      card: sessionScorecard(GROUPS, cur ? vbs[cur.id] : {}, statusFn),
-      pareto: rootCausePareto(rootCauses, sessions, 30, today),
+      card: sessionScorecard(GROUPS, scoreSession ? vbs[scoreSession.id] : {}, statusFn),
+      pareto: rootCausePareto(rootCauses, sessions, 30, asOf),
       ageing: actionAgeing(actions, today),
       streaks: redStreaks(GROUPS, sessions, kpiValues, 3, statusFn),
     }
-  }, [GROUPS, sessions, kpiValues, rootCauses, actions, curDate, today, statusFn])
+  }, [GROUPS, sessions, kpiValues, rootCauses, actions, scoreSession, scoreDate, today, statusFn])
 
   const { card, pareto, ageing, streaks } = data
   const maxCount = Math.max(1, ...pareto.map((p) => p.count))
@@ -52,7 +62,10 @@ export default function InsightsPanel({ GROUPS, sessions, kpiValues, rootCauses,
   return (
     <section style={{ display: 'grid', gap: 16, marginBottom: 24 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
-        <h2 style={S.h2}>DDS insights · {curDate}</h2>
+        <div>
+          <h2 style={S.h2}>DDS insights · {scoreDate ? new Date(scoreDate + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '–'}</h2>
+          {isFallback && <div style={{ fontSize: 12, color: B.muted, marginTop: 2 }}>No KPI values saved for the selected day yet, so this shows the latest session with data.</div>}
+        </div>
         <div className="no-print" style={{ display: 'flex', gap: 8 }}>
           <button style={S.btnPrimary} onClick={onExcel} disabled={busy}>{busy ? 'Exporting…' : 'Export to Excel'}</button>
           <button style={S.btnSecondary} onClick={printBoard}>Print / PDF</button>
@@ -70,7 +83,7 @@ export default function InsightsPanel({ GROUPS, sessions, kpiValues, rootCauses,
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 12 }}>
         {/* Root-cause Pareto */}
         <div style={{ ...S.card, padding: 16 }}>
-          <h3 style={{ ...S.h2, fontSize: 13, marginBottom: 10 }}>Root causes · last 30 days</h3>
+          <h3 style={{ ...S.h2, fontSize: 13, marginBottom: 10 }}>Root causes · 30 days to {scoreDate ? new Date(scoreDate + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : '–'}</h3>
           {pareto.length === 0 && <div style={{ color: B.muted, fontSize: 13 }}>No root causes logged yet.</div>}
           {pareto.slice(0, 6).map((p) => (
             <div key={p.category} style={{ display: 'grid', gridTemplateColumns: '120px 1fr 64px', alignItems: 'center', gap: 8, margin: '6px 0' }}>

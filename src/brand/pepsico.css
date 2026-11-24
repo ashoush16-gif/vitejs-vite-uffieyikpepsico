@@ -1,24 +1,33 @@
-/* PepsiCo brand base styles - replace the contents of src/index.css with this file
-   (or import it at the top of main.jsx: import './brand/pepsico.css').
-   Font files are licensed: download GT Pressura and Gilroy from the PepsiCo brand portal
-   and place them in /public/fonts/. Until then the Arial fallbacks are used. */
+/* PepsiCo brand base styles (imported in main.jsx).
+   Fonts: GT Pressura (headings) and Gilroy (body) are licensed PepsiCo brand fonts.
+   They load from the fonts installed on PepsiCo laptops via local(). For machines without
+   them, a web copy can be placed in /public/fonts/ - only in a PRIVATE repo, because the
+   font licence does not allow publishing the files. Arial is the last fallback. */
 
 @font-face {
-  font-family: "GT Pressura";
-  src: url("/fonts/GT-Pressura-Standard-Black.woff2") format("woff2");
-  font-weight: 900;
+  font-family: "PepsiCo Head";
+  src: local("GT Pressura LCG Black"), local("GTPressuraLCG-Black"),
+       local("GT Pressura LV Black"), local("GTPressuraLV-Black"),
+       url("/fonts/GT-Pressura-LCG-Standard-Black.woff2") format("woff2");
+  font-weight: 100 900;
   font-display: swap;
 }
 @font-face {
-  font-family: "Gilroy";
-  src: url("/fonts/Gilroy-Medium.woff2") format("woff2");
-  font-weight: 500;
+  font-family: "PepsiCo Body";
+  src: local("Gilroy-Regular"), local("Gilroy Regular"), url("/fonts/Gilroy-Regular.woff2") format("woff2");
+  font-weight: 100 449;
   font-display: swap;
 }
 @font-face {
-  font-family: "Gilroy";
-  src: url("/fonts/Gilroy-Bold.woff2") format("woff2");
-  font-weight: 700;
+  font-family: "PepsiCo Body";
+  src: local("Gilroy-Medium"), local("Gilroy Medium"), url("/fonts/Gilroy-Medium.woff2") format("woff2");
+  font-weight: 450 549;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PepsiCo Body";
+  src: local("Gilroy-SemiBold"), local("Gilroy SemiBold"), url("/fonts/Gilroy-SemiBold.woff2") format("woff2");
+  font-weight: 550 900;
   font-display: swap;
 }
 
@@ -36,8 +45,8 @@
   --pep-off-white: #F6F4F1;
   --pep-line: #E3E6EA;
   --pep-red: #C8102E;
-  --font-head: "GT Pressura", "Arial Narrow", Arial, sans-serif;
-  --font-body: Gilroy, Arial, Helvetica, sans-serif;
+  --font-head: "PepsiCo Head", "GT Pressura LCG Black", Arial, sans-serif;
+  --font-body: "PepsiCo Body", Gilroy, Arial, Helvetica, sans-serif;
 }
 
 * { box-sizing: border-box; }

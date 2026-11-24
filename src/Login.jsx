@@ -28,7 +28,7 @@ export default function Login() {
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #02355A 0%, #02355A 50%, #155798 100%)',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
-      fontFamily: "Gilroy,Arial,sans-serif", padding: 20,
+      fontFamily: "'PepsiCo Body',Gilroy,Arial,sans-serif", padding: 20,
     }}>
       {/* Grid background */}
       <div style={{
@@ -54,7 +54,7 @@ export default function Login() {
           <div style={{ marginBottom: 28 }}>
             <h1 style={{
               fontSize: 22, fontWeight: 700, color: '#02355A',
-              fontFamily: "'GT Pressura','Arial Narrow',Arial,sans-serif", letterSpacing: 0.5, margin: 0
+              fontFamily: "'PepsiCo Head','GT Pressura LCG Black',Arial,sans-serif", letterSpacing: 0.5, margin: 0
             }}>
               Daily Direction Setting
             </h1>
@@ -71,7 +71,7 @@ export default function Login() {
               type="email" value={email}
               onChange={e => setEmail(e.target.value)}
               placeholder="name@pepsico.com"
-              style={{ width: '100%', padding: '11px 14px', fontSize: 14, border: '1.5px solid #E3E6EA', borderRadius: 8, outline: 'none', fontFamily: "Gilroy,Arial,sans-serif", boxSizing: 'border-box' }}
+              style={{ width: '100%', padding: '11px 14px', fontSize: 14, border: '1.5px solid #E3E6EA', borderRadius: 8, outline: 'none', fontFamily: "'PepsiCo Body',Gilroy,Arial,sans-serif", boxSizing: 'border-box' }}
               onFocus={e => e.target.style.borderColor = '#155798'}
               onBlur={e => e.target.style.borderColor = '#E3E6EA'}
             />
@@ -86,7 +86,7 @@ export default function Login() {
               onChange={e => setPassword(e.target.value)}
               placeholder="••••••••"
               onKeyDown={e => e.key === 'Enter' && handleSubmit()}
-              style={{ width: '100%', padding: '11px 14px', fontSize: 14, border: '1.5px solid #E3E6EA', borderRadius: 8, outline: 'none', fontFamily: "Gilroy,Arial,sans-serif", boxSizing: 'border-box' }}
+              style={{ width: '100%', padding: '11px 14px', fontSize: 14, border: '1.5px solid #E3E6EA', borderRadius: 8, outline: 'none', fontFamily: "'PepsiCo Body',Gilroy,Arial,sans-serif", boxSizing: 'border-box' }}
               onFocus={e => e.target.style.borderColor = '#155798'}
               onBlur={e => e.target.style.borderColor = '#E3E6EA'}
             />
@@ -102,7 +102,7 @@ export default function Login() {
             width: '100%', padding: '13px',
             background: loading ? '#A6CBF0' : 'linear-gradient(135deg, #155798, #3680CE)',
             color: 'white', border: 'none', borderRadius: 8, fontSize: 14, fontWeight: 600,
-            cursor: loading ? 'default' : 'pointer', fontFamily: "Gilroy,Arial,sans-serif",
+            cursor: loading ? 'default' : 'pointer', fontFamily: "'PepsiCo Body',Gilroy,Arial,sans-serif",
             letterSpacing: 0.5, boxShadow: loading ? 'none' : '0 4px 14px rgba(0,75,147,0.4)',
           }}>
             {loading ? 'Signing in...' : mode === 'login' ? 'Sign in to DDS Board' : 'Create account'}

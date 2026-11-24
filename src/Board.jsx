@@ -133,10 +133,10 @@ function TrendChart({ sessions, kpiId, kpi, color }) {
       ]},
       options: {
         responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{display:false}, tooltip:{ backgroundColor:'rgba(0,26,64,0.9)', titleFont:{family:"Gilroy,Arial,sans-serif",size:11}, bodyFont:{family:"Gilroy,Arial,sans-serif",size:12} }},
+        plugins:{ legend:{display:false}, tooltip:{ backgroundColor:'rgba(0,26,64,0.9)', titleFont:{family:"'PepsiCo Body',Gilroy,Arial,sans-serif",size:11}, bodyFont:{family:"'PepsiCo Body',Gilroy,Arial,sans-serif",size:12} }},
         scales:{
-          x:{ ticks:{font:{family:"Gilroy,Arial,sans-serif",size:9},maxRotation:45,autoSkip:true,maxTicksLimit:8}, grid:{color:'rgba(0,0,0,0.04)'} },
-          y:{ ticks:{font:{family:"Gilroy,Arial,sans-serif",size:10}}, grid:{color:'rgba(0,0,0,0.06)'} }
+          x:{ ticks:{font:{family:"'PepsiCo Body',Gilroy,Arial,sans-serif",size:9},maxRotation:45,autoSkip:true,maxTicksLimit:8}, grid:{color:'rgba(0,0,0,0.04)'} },
+          y:{ ticks:{font:{family:"'PepsiCo Body',Gilroy,Arial,sans-serif",size:10}}, grid:{color:'rgba(0,0,0,0.06)'} }
         }
       }
     })
@@ -255,7 +255,7 @@ function StreakTracker({ sessions }) {
               <div style={{ fontSize:12, fontWeight:500, color:'#1f2937' }}>{kpi.name.length>35?kpi.name.slice(0,35)+'…':kpi.name}</div>
               <div style={{ fontSize:10, color:'#5B6B7B', marginTop:1 }}>{label} streak</div>
             </div>
-            <div style={{ fontSize:22, fontWeight:700, color, fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif" }}>{streak}d</div>
+            <div style={{ fontSize:22, fontWeight:700, color, fontFamily:"'PepsiCo Head','GT Pressura LCG Black',Arial,sans-serif" }}>{streak}d</div>
           </div>
         )
       })}
@@ -289,7 +289,7 @@ function RCAnalytics({ sessions }) {
         ].map(c => (
           <div key={c.label} style={{ background:'white', border:'1px solid #E3E6EA', borderRadius:8, padding:'10px 12px', textAlign:'center' }}>
             <div style={{ fontSize:10, color:'#5B6B7B', marginBottom:3, textTransform:'uppercase', letterSpacing:0.3 }}>{c.label}</div>
-            <div style={{ fontSize:c.small?14:22, fontWeight:700, color:c.color, fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif" }}>{c.val}</div>
+            <div style={{ fontSize:c.small?14:22, fontWeight:700, color:c.color, fontFamily:"'PepsiCo Head','GT Pressura LCG Black',Arial,sans-serif" }}>{c.val}</div>
           </div>
         ))}
       </div>
@@ -442,7 +442,7 @@ Tone: Executive briefing level — strategic, data-driven, no jargon. Under 350 
   return (
     <div>
       <div style={{ marginBottom:16 }}>
-        <h2 style={{ fontSize:18, fontWeight:700, color:NAVY, fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif" }}>AI Reports</h2>
+        <h2 style={{ fontSize:18, fontWeight:700, color:NAVY, fontFamily:"'PepsiCo Head','GT Pressura LCG Black',Arial,sans-serif" }}>AI Reports</h2>
         <p style={{ fontSize:12, color:'#5B6B7B', marginTop:2 }}>Generate intelligent reports from your DDS data powered by Claude AI</p>
       </div>
 
@@ -455,7 +455,7 @@ Tone: Executive briefing level — strategic, data-driven, no jargon. Under 350 
             borderRadius:10, padding:'14px 16px', cursor:'pointer', transition:'all 0.15s',
           }}>
             <div style={{ fontSize:20, marginBottom:6 }}>{rt.icon}</div>
-            <div style={{ fontSize:13, fontWeight:600, color:reportType===rt.id?'white':NAVY, marginBottom:3, fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif" }}>{rt.label}</div>
+            <div style={{ fontSize:13, fontWeight:600, color:reportType===rt.id?'white':NAVY, marginBottom:3, fontFamily:"'PepsiCo Head','GT Pressura LCG Black',Arial,sans-serif" }}>{rt.label}</div>
             <div style={{ fontSize:11, color:reportType===rt.id?'rgba(255,255,255,0.75)':'#5B6B7B' }}>{rt.desc}</div>
           </div>
         ))}
@@ -465,7 +465,7 @@ Tone: Executive briefing level — strategic, data-driven, no jargon. Under 350 
         background: loading ? '#A6CBF0' : `linear-gradient(135deg,${BLUE},#3680CE)`,
         color:'white', border:'none', borderRadius:8, padding:'11px 24px',
         fontSize:13, fontWeight:600, cursor:loading?'default':'pointer',
-        fontFamily:"Gilroy,Arial,sans-serif", marginBottom:16,
+        fontFamily:"'PepsiCo Body',Gilroy,Arial,sans-serif", marginBottom:16,
         boxShadow: loading?'none':'0 3px 12px rgba(0,75,147,0.35)',
       }}>
         {loading ? '⏳ Generating report...' : `Generate ${REPORT_TYPES.find(r=>r.id===reportType)?.label}`}
@@ -477,7 +477,7 @@ Tone: Executive briefing level — strategic, data-driven, no jargon. Under 350 
             <div style={{ fontSize:13, fontWeight:600, color:'white' }}>
               {REPORT_TYPES.find(r=>r.id===reportType)?.label} — {new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}
             </div>
-            <button onClick={copyReport} style={{ background:'rgba(255,255,255,0.15)', border:'1px solid rgba(255,255,255,0.3)', borderRadius:6, color:'white', fontSize:11, padding:'4px 12px', cursor:'pointer', fontFamily:"Gilroy,Arial,sans-serif" }}>
+            <button onClick={copyReport} style={{ background:'rgba(255,255,255,0.15)', border:'1px solid rgba(255,255,255,0.3)', borderRadius:6, color:'white', fontSize:11, padding:'4px 12px', cursor:'pointer', fontFamily:"'PepsiCo Body',Gilroy,Arial,sans-serif" }}>
               {copied ? '✓ Copied!' : '📋 Copy for Teams/Email'}
             </button>
           </div>
@@ -528,7 +528,7 @@ function ImportPanel() {
   return (
     <div style={{ maxWidth:600 }}>
       <div style={{ marginBottom:16 }}>
-        <h2 style={{ fontSize:18, fontWeight:700, color:NAVY, fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif" }}>Import Historical Data</h2>
+        <h2 style={{ fontSize:18, fontWeight:700, color:NAVY, fontFamily:"'PepsiCo Head','GT Pressura LCG Black',Arial,sans-serif" }}>Import Historical Data</h2>
         <p style={{ fontSize:13, color:'#5B6B7B', marginTop:4 }}>Loads 13 sessions from April 13–29, 2026 from your DDS Excel file into Supabase.</p>
       </div>
       <div style={{ background:'white', borderRadius:10, padding:20, boxShadow:'0 1px 4px rgba(0,0,0,0.06)', marginBottom:16 }}>
@@ -539,7 +539,7 @@ function ImportPanel() {
           background: done?'#5D910D':running?'#A6CBF0':`linear-gradient(135deg,${BLUE},#3680CE)`,
           color:'white', border:'none', borderRadius:8, padding:'10px 20px',
           fontSize:13, fontWeight:600, cursor:running||done?'default':'pointer',
-          fontFamily:"Gilroy,Arial,sans-serif",
+          fontFamily:"'PepsiCo Body',Gilroy,Arial,sans-serif",
         }}>
           {done ? '✅ Import complete' : running ? '⏳ Importing...' : '▶ Run import'}
         </button>
@@ -665,7 +665,7 @@ export default function Board({ session, selectedBU, onBack }) {
   ]
 
   const tabStyle = (t) => ({
-    fontSize:12, fontFamily:"Gilroy,Arial,sans-serif", fontWeight:tab===t?600:400,
+    fontSize:12, fontFamily:"'PepsiCo Body',Gilroy,Arial,sans-serif", fontWeight:tab===t?600:400,
     padding:'10px 14px', background:'none', border:'none',
     borderBottom:`2px solid ${tab===t?'white':'transparent'}`,
     color:tab===t?'white':'rgba(255,255,255,0.55)',
@@ -673,7 +673,7 @@ export default function Board({ session, selectedBU, onBack }) {
   })
 
   return (
-    <div style={{ minHeight:'100vh', background:'#F6F4F1', fontFamily:"Gilroy,Arial,sans-serif" }}>
+    <div style={{ minHeight:'100vh', background:'#F6F4F1', fontFamily:"'PepsiCo Body',Gilroy,Arial,sans-serif" }}>
 
       {/* HEADER */}
       <div style={{ background:`linear-gradient(135deg,${NAVY} 0%,${BLUE} 100%)`, boxShadow:'0 2px 20px rgba(0,0,0,0.2)' }}>
@@ -681,14 +681,14 @@ export default function Board({ session, selectedBU, onBack }) {
           <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'14px 0', borderBottom:'1px solid rgba(255,255,255,0.1)' }}>
             <div style={{ display:'flex', alignItems:'center', gap:14 }}>
               {onBack && (
-                <button onClick={onBack} style={{ background:'rgba(255,255,255,0.12)', border:'1px solid rgba(255,255,255,0.2)', borderRadius:6, color:'white', fontSize:12, padding:'5px 10px', cursor:'pointer', fontFamily:"Gilroy,Arial,sans-serif" }}>
+                <button onClick={onBack} style={{ background:'rgba(255,255,255,0.12)', border:'1px solid rgba(255,255,255,0.2)', borderRadius:6, color:'white', fontSize:12, padding:'5px 10px', cursor:'pointer', fontFamily:"'PepsiCo Body',Gilroy,Arial,sans-serif" }}>
                   ← Hub
                 </button>
               )}
               <PepsiCoLogo height={38} />
               <div style={{ width:1, height:32, background:'rgba(255,255,255,0.25)' }} />
               <div>
-                <div style={{ fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif", fontSize:16, fontWeight:700, color:'white', letterSpacing:1 }}>
+                <div style={{ fontFamily:"'PepsiCo Head','GT Pressura LCG Black',Arial,sans-serif", fontSize:16, fontWeight:700, color:'white', letterSpacing:1 }}>
                   DAILY DIRECTION SETTING
                 </div>
                 <div style={{ fontSize:11, color:'rgba(255,255,255,0.6)', letterSpacing:0.5 }}>
@@ -708,7 +708,7 @@ export default function Board({ session, selectedBU, onBack }) {
                   {new Date().toLocaleDateString('en-GB',{weekday:'long',day:'2-digit',month:'long',year:'numeric'})}
                 </div>
               </div>
-              <button onClick={()=>supabase.auth.signOut()} style={{ fontSize:11, padding:'5px 12px', background:'rgba(255,255,255,0.12)', border:'1px solid rgba(255,255,255,0.2)', borderRadius:6, color:'white', cursor:'pointer', fontFamily:"Gilroy,Arial,sans-serif" }}>
+              <button onClick={()=>supabase.auth.signOut()} style={{ fontSize:11, padding:'5px 12px', background:'rgba(255,255,255,0.12)', border:'1px solid rgba(255,255,255,0.2)', borderRadius:6, color:'white', cursor:'pointer', fontFamily:"'PepsiCo Body',Gilroy,Arial,sans-serif" }}>
                 Sign out
               </button>
             </div>
@@ -735,7 +735,7 @@ export default function Board({ session, selectedBU, onBack }) {
               ].map(c=>(
                 <div key={c.label} style={{ background:c.bg, border:`1.5px solid ${c.border}`, borderRadius:10, padding:'12px 16px', textAlign:'center', boxShadow:'0 1px 4px rgba(0,0,0,0.06)' }}>
                   <div style={{ fontSize:10, color:'#5B6B7B', fontWeight:500, textTransform:'uppercase', letterSpacing:0.5, marginBottom:4 }}>{c.label}</div>
-                  <div style={{ fontSize:28, fontWeight:700, color:c.color, fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif" }}>{c.val}</div>
+                  <div style={{ fontSize:28, fontWeight:700, color:c.color, fontFamily:"'PepsiCo Head','GT Pressura LCG Black',Arial,sans-serif" }}>{c.val}</div>
                 </div>
               ))}
             </div>
@@ -751,7 +751,7 @@ export default function Board({ session, selectedBU, onBack }) {
                 <button onClick={()=>setCurDate(d=>nextWeekday(d,1))} style={{ background:'#f3f4f6', border:'1.5px solid #E3E6EA', borderRadius:6, padding:'6px 14px', fontSize:14, cursor:'pointer', color:'#02355A' }}>→</button>
                 <button onClick={()=>setCurDate(today)} style={{ background:'#eff6ff', border:'1.5px solid #A6CBF0', borderRadius:6, padding:'6px 12px', fontSize:11, cursor:'pointer', color:BLUE, fontWeight:500 }}>Today</button>
               </div>
-              <button onClick={saveSession} disabled={saving} style={{ background:saving?'#A6CBF0':`linear-gradient(135deg,${BLUE},#3680CE)`, color:'white', border:'none', borderRadius:8, padding:'9px 22px', fontSize:13, fontWeight:600, cursor:saving?'default':'pointer', fontFamily:"Gilroy,Arial,sans-serif", boxShadow:saving?'none':'0 3px 12px rgba(0,75,147,0.35)', minWidth:140 }}>
+              <button onClick={saveSession} disabled={saving} style={{ background:saving?'#A6CBF0':`linear-gradient(135deg,${BLUE},#3680CE)`, color:'white', border:'none', borderRadius:8, padding:'9px 22px', fontSize:13, fontWeight:600, cursor:saving?'default':'pointer', fontFamily:"'PepsiCo Body',Gilroy,Arial,sans-serif", boxShadow:saving?'none':'0 3px 12px rgba(0,75,147,0.35)', minWidth:140 }}>
                 {saveMsg||(saving?'Saving...':'Save Session')}
               </button>
             </div>
@@ -760,7 +760,7 @@ export default function Board({ session, selectedBU, onBack }) {
             {GROUPS.map(g=>(
               <div key={g.label} style={{ background:'white', borderRadius:10, marginBottom:10, boxShadow:'0 1px 4px rgba(0,0,0,0.06)', overflow:'hidden' }}>
                 <div onClick={()=>setCollapsed(p=>({...p,[g.label]:!p[g.label]}))} style={{ background:`linear-gradient(135deg,${g.color},${BLUE})`, padding:'10px 16px', display:'flex', alignItems:'center', cursor:'pointer', userSelect:'none' }}>
-                  <span style={{ fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif", fontSize:13, fontWeight:600, color:'white', letterSpacing:0.8, textTransform:'uppercase' }}>{g.label}</span>
+                  <span style={{ fontFamily:"'PepsiCo Head','GT Pressura LCG Black',Arial,sans-serif", fontSize:13, fontWeight:600, color:'white', letterSpacing:0.8, textTransform:'uppercase' }}>{g.label}</span>
                   <span style={{ marginLeft:'auto', color:'rgba(255,255,255,0.7)', fontSize:11 }}>{collapsed[g.label]?'▶':'▼'}</span>
                 </div>
                 {!collapsed[g.label]&&(
@@ -797,12 +797,12 @@ export default function Board({ session, selectedBU, onBack }) {
                             ):(
                               <input type="number" value={val} placeholder="—" step="any"
                                 onChange={e=>setVals(p=>({...p,[kpi.id]:e.target.value}))}
-                                style={{ width:80, padding:'6px 8px', border:`1.5px solid ${s!=='empty'?stBorder(s):'#E3E6EA'}`, borderRadius:6, fontSize:13, fontWeight:600, textAlign:'center', outline:'none', background:s!=='empty'?stBg(s):'white', color:stColor(s), fontFamily:"Gilroy,Arial,sans-serif", transition:'all 0.15s' }}
+                                style={{ width:80, padding:'6px 8px', border:`1.5px solid ${s!=='empty'?stBorder(s):'#E3E6EA'}`, borderRadius:6, fontSize:13, fontWeight:600, textAlign:'center', outline:'none', background:s!=='empty'?stBg(s):'white', color:stColor(s), fontFamily:"'PepsiCo Body',Gilroy,Arial,sans-serif", transition:'all 0.15s' }}
                               />
                             )}
                           </div>
                           <div style={{ textAlign:'center' }}>
-                            <button onClick={()=>{ setRcModal(kpi); setRcForm(rc||{category:'',desc:'',recurring:false}) }} style={{ fontSize:11, padding:'5px 10px', border:`1.5px solid ${hasRc?'#F3B3BE':'#E3E6EA'}`, borderRadius:6, cursor:'pointer', background:hasRc?'#FCE8EB':'#f9fafb', color:hasRc?'#C8102E':'#5B6B7B', fontFamily:"Gilroy,Arial,sans-serif", fontWeight:500, whiteSpace:'nowrap' }}>
+                            <button onClick={()=>{ setRcModal(kpi); setRcForm(rc||{category:'',desc:'',recurring:false}) }} style={{ fontSize:11, padding:'5px 10px', border:`1.5px solid ${hasRc?'#F3B3BE':'#E3E6EA'}`, borderRadius:6, cursor:'pointer', background:hasRc?'#FCE8EB':'#f9fafb', color:hasRc?'#C8102E':'#5B6B7B', fontFamily:"'PepsiCo Body',Gilroy,Arial,sans-serif", fontWeight:500, whiteSpace:'nowrap' }}>
                               {hasRc?`✓ ${rc.category.split(' ')[0]}`:'+ Root cause'}
                             </button>
                           </div>
@@ -830,10 +830,10 @@ export default function Board({ session, selectedBU, onBack }) {
           <div>
             <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:14 }}>
               <div>
-                <h2 style={{ fontSize:18, fontWeight:700, color:NAVY, fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif" }}>Action Tracker</h2>
+                <h2 style={{ fontSize:18, fontWeight:700, color:NAVY, fontFamily:"'PepsiCo Head','GT Pressura LCG Black',Arial,sans-serif" }}>Action Tracker</h2>
                 <p style={{ fontSize:12, color:'#5B6B7B', marginTop:2 }}>{openActions.length} open · {overdueActions.length} overdue · {agingCount} aging (5+ days)</p>
               </div>
-              <button onClick={()=>setActModal(true)} style={{ background:`linear-gradient(135deg,${BLUE},#3680CE)`, color:'white', border:'none', borderRadius:8, padding:'10px 18px', fontSize:13, fontWeight:600, cursor:'pointer', fontFamily:"Gilroy,Arial,sans-serif", boxShadow:'0 3px 12px rgba(0,75,147,0.35)' }}>+ Add action</button>
+              <button onClick={()=>setActModal(true)} style={{ background:`linear-gradient(135deg,${BLUE},#3680CE)`, color:'white', border:'none', borderRadius:8, padding:'10px 18px', fontSize:13, fontWeight:600, cursor:'pointer', fontFamily:"'PepsiCo Body',Gilroy,Arial,sans-serif", boxShadow:'0 3px 12px rgba(0,75,147,0.35)' }}>+ Add action</button>
             </div>
             <div style={{ background:'white', borderRadius:10, boxShadow:'0 1px 4px rgba(0,0,0,0.06)', overflow:'hidden' }}>
               <table style={{ width:'100%', borderCollapse:'collapse', fontSize:13 }}>
@@ -880,7 +880,7 @@ export default function Board({ session, selectedBU, onBack }) {
         {tab==='trends'&&(
           <div>
             <div style={{ marginBottom:16 }}>
-              <h2 style={{ fontSize:18, fontWeight:700, color:NAVY, fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif" }}>Trends & Analysis</h2>
+              <h2 style={{ fontSize:18, fontWeight:700, color:NAVY, fontFamily:"'PepsiCo Head','GT Pressura LCG Black',Arial,sans-serif" }}>Trends & Analysis</h2>
               <p style={{ fontSize:12, color:'#5B6B7B', marginTop:2 }}>Last 30 working days · RAG-coloured bars · 7-day rolling average · dashed target</p>
             </div>
 
@@ -906,7 +906,7 @@ export default function Board({ session, selectedBU, onBack }) {
               <>
                 {/* KPI Health Heatmap */}
                 <div style={{ background:'white', borderRadius:10, padding:16, boxShadow:'0 1px 4px rgba(0,0,0,0.06)', marginBottom:14 }}>
-                  <div style={{ fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif", fontSize:15, fontWeight:700, color:NAVY, marginBottom:4 }}>KPI Health Heatmap</div>
+                  <div style={{ fontFamily:"'PepsiCo Head','GT Pressura LCG Black',Arial,sans-serif", fontSize:15, fontWeight:700, color:NAVY, marginBottom:4 }}>KPI Health Heatmap</div>
                   <div style={{ fontSize:11, color:'#5B6B7B', marginBottom:12 }}>Last 14 sessions · ✓ green · ~ amber · ✕ red · · empty</div>
                   <HeatmapChart sessions={sessions}/>
                 </div>
@@ -914,12 +914,12 @@ export default function Board({ session, selectedBU, onBack }) {
                 {/* Worst Offenders + Streak side by side */}
                 <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14, marginBottom:14 }}>
                   <div style={{ background:'white', borderRadius:10, padding:16, boxShadow:'0 1px 4px rgba(0,0,0,0.06)' }}>
-                    <div style={{ fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif", fontSize:15, fontWeight:700, color:NAVY, marginBottom:4 }}>Worst Offenders</div>
+                    <div style={{ fontFamily:"'PepsiCo Head','GT Pressura LCG Black',Arial,sans-serif", fontSize:15, fontWeight:700, color:NAVY, marginBottom:4 }}>Worst Offenders</div>
                     <div style={{ fontSize:11, color:'#5B6B7B', marginBottom:12 }}>% days red in last 30 sessions</div>
                     <WorstOffenders sessions={sessions}/>
                   </div>
                   <div style={{ background:'white', borderRadius:10, padding:16, boxShadow:'0 1px 4px rgba(0,0,0,0.06)' }}>
-                    <div style={{ fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif", fontSize:15, fontWeight:700, color:NAVY, marginBottom:4 }}>Streak Tracker</div>
+                    <div style={{ fontFamily:"'PepsiCo Head','GT Pressura LCG Black',Arial,sans-serif", fontSize:15, fontWeight:700, color:NAVY, marginBottom:4 }}>Streak Tracker</div>
                     <div style={{ fontSize:11, color:'#5B6B7B', marginBottom:12 }}>Consecutive days same RAG status</div>
                     <StreakTracker sessions={sessions}/>
                   </div>
@@ -927,7 +927,7 @@ export default function Board({ session, selectedBU, onBack }) {
 
                 {/* RC Analytics */}
                 <div style={{ background:'white', borderRadius:10, padding:16, boxShadow:'0 1px 4px rgba(0,0,0,0.06)', marginBottom:14 }}>
-                  <div style={{ fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif", fontSize:15, fontWeight:700, color:NAVY, marginBottom:4 }}>Root Cause Analytics</div>
+                  <div style={{ fontFamily:"'PepsiCo Head','GT Pressura LCG Black',Arial,sans-serif", fontSize:15, fontWeight:700, color:NAVY, marginBottom:4 }}>Root Cause Analytics</div>
                   <div style={{ fontSize:11, color:'#5B6B7B', marginBottom:12 }}>Category distribution across all red KPI sessions</div>
                   <RCAnalytics sessions={sessions}/>
                 </div>
@@ -976,7 +976,7 @@ export default function Board({ session, selectedBU, onBack }) {
         {tab==='log'&&(
           <div>
             <div style={{ marginBottom:16 }}>
-              <h2 style={{ fontSize:18, fontWeight:700, color:NAVY, fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif" }}>Session Log</h2>
+              <h2 style={{ fontSize:18, fontWeight:700, color:NAVY, fontFamily:"'PepsiCo Head','GT Pressura LCG Black',Arial,sans-serif" }}>Session Log</h2>
               <p style={{ fontSize:12, color:'#5B6B7B', marginTop:2 }}>{sessions.length} sessions saved</p>
             </div>
             {!sessions.length&&<div style={{ background:'white', borderRadius:10, padding:40, textAlign:'center', color:'#9ca3af', boxShadow:'0 1px 4px rgba(0,0,0,0.06)' }}>No sessions saved yet.</div>}
@@ -996,7 +996,7 @@ export default function Board({ session, selectedBU, onBack }) {
                       <span style={{ fontSize:11, padding:'3px 10px', borderRadius:12, background:'#EEF6E0', color:'#5D910D', fontWeight:600 }}>{greens} green</span>
                     </div>
                     {isToday&&<span style={{ fontSize:10, padding:'2px 8px', borderRadius:10, background:BLUE, color:'white', fontWeight:600 }}>TODAY</span>}
-                    <button onClick={()=>{ setCurDate(s.date); setTab('board') }} style={{ marginLeft:'auto', fontSize:12, padding:'6px 14px', border:'1.5px solid #E3E6EA', borderRadius:6, cursor:'pointer', background:'#f9fafb', color:'#02355A', fontFamily:"Gilroy,Arial,sans-serif" }}>Load →</button>
+                    <button onClick={()=>{ setCurDate(s.date); setTab('board') }} style={{ marginLeft:'auto', fontSize:12, padding:'6px 14px', border:'1.5px solid #E3E6EA', borderRadius:6, cursor:'pointer', background:'#f9fafb', color:'#02355A', fontFamily:"'PepsiCo Body',Gilroy,Arial,sans-serif" }}>Load →</button>
                   </div>
                 )
               })}
@@ -1012,26 +1012,26 @@ export default function Board({ session, selectedBU, onBack }) {
       {rcModal&&(
         <div style={{ position:'fixed', inset:0, background:'rgba(0,26,64,0.6)', display:'flex', alignItems:'center', justifyContent:'center', zIndex:99, padding:20 }}>
           <div style={{ background:'white', borderRadius:16, padding:28, width:420, maxWidth:'100%', boxShadow:'0 24px 64px rgba(0,0,0,0.3)' }}>
-            <h3 style={{ fontSize:16, fontWeight:700, color:NAVY, marginBottom:4, fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif" }}>Root Cause Analysis</h3>
+            <h3 style={{ fontSize:16, fontWeight:700, color:NAVY, marginBottom:4, fontFamily:"'PepsiCo Head','GT Pressura LCG Black',Arial,sans-serif" }}>Root Cause Analysis</h3>
             <p style={{ fontSize:12, color:'#5B6B7B', marginBottom:20 }}>{rcModal.name}</p>
             <div style={{ marginBottom:14 }}>
               <label style={{ display:'block', fontSize:11, fontWeight:600, color:'#02355A', marginBottom:6, textTransform:'uppercase', letterSpacing:0.5 }}>Category *</label>
-              <select value={rcForm.category} onChange={e=>setRcForm(p=>({...p,category:e.target.value}))} style={{ width:'100%', padding:'10px 12px', fontSize:13, border:'1.5px solid #E3E6EA', borderRadius:8, fontFamily:"Gilroy,Arial,sans-serif", outline:'none' }}>
+              <select value={rcForm.category} onChange={e=>setRcForm(p=>({...p,category:e.target.value}))} style={{ width:'100%', padding:'10px 12px', fontSize:13, border:'1.5px solid #E3E6EA', borderRadius:8, fontFamily:"'PepsiCo Body',Gilroy,Arial,sans-serif", outline:'none' }}>
                 <option value="">Select category…</option>
                 {RC_CATS.map(c=><option key={c}>{c}</option>)}
               </select>
             </div>
             <div style={{ marginBottom:14 }}>
               <label style={{ display:'block', fontSize:11, fontWeight:600, color:'#02355A', marginBottom:6, textTransform:'uppercase', letterSpacing:0.5 }}>Description & corrective action</label>
-              <textarea value={rcForm.desc} onChange={e=>setRcForm(p=>({...p,desc:e.target.value}))} rows={3} placeholder="What caused this? What is the corrective action?" style={{ width:'100%', padding:'10px 12px', fontSize:13, border:'1.5px solid #E3E6EA', borderRadius:8, fontFamily:"Gilroy,Arial,sans-serif", resize:'vertical', outline:'none' }}/>
+              <textarea value={rcForm.desc} onChange={e=>setRcForm(p=>({...p,desc:e.target.value}))} rows={3} placeholder="What caused this? What is the corrective action?" style={{ width:'100%', padding:'10px 12px', fontSize:13, border:'1.5px solid #E3E6EA', borderRadius:8, fontFamily:"'PepsiCo Body',Gilroy,Arial,sans-serif", resize:'vertical', outline:'none' }}/>
             </div>
             <div style={{ marginBottom:20, display:'flex', alignItems:'center', gap:8 }}>
               <input type="checkbox" id="recur" checked={rcForm.recurring} onChange={e=>setRcForm(p=>({...p,recurring:e.target.checked}))} style={{ width:16, height:16 }}/>
               <label htmlFor="recur" style={{ fontSize:13, color:'#02355A', cursor:'pointer' }}>This is a recurring issue</label>
             </div>
             <div style={{ display:'flex', gap:10, justifyContent:'flex-end' }}>
-              <button onClick={()=>setRcModal(null)} style={{ fontSize:13, padding:'9px 18px', border:'1.5px solid #E3E6EA', borderRadius:8, cursor:'pointer', background:'white', color:'#02355A', fontFamily:"Gilroy,Arial,sans-serif" }}>Cancel</button>
-              <button onClick={saveRc} style={{ fontSize:13, padding:'9px 18px', background:`linear-gradient(135deg,${BLUE},#3680CE)`, color:'white', border:'none', borderRadius:8, cursor:'pointer', fontFamily:"Gilroy,Arial,sans-serif", fontWeight:600 }}>Save root cause</button>
+              <button onClick={()=>setRcModal(null)} style={{ fontSize:13, padding:'9px 18px', border:'1.5px solid #E3E6EA', borderRadius:8, cursor:'pointer', background:'white', color:'#02355A', fontFamily:"'PepsiCo Body',Gilroy,Arial,sans-serif" }}>Cancel</button>
+              <button onClick={saveRc} style={{ fontSize:13, padding:'9px 18px', background:`linear-gradient(135deg,${BLUE},#3680CE)`, color:'white', border:'none', borderRadius:8, cursor:'pointer', fontFamily:"'PepsiCo Body',Gilroy,Arial,sans-serif", fontWeight:600 }}>Save root cause</button>
             </div>
           </div>
         </div>
@@ -1041,28 +1041,28 @@ export default function Board({ session, selectedBU, onBack }) {
       {actModal&&(
         <div style={{ position:'fixed', inset:0, background:'rgba(0,26,64,0.6)', display:'flex', alignItems:'center', justifyContent:'center', zIndex:99, padding:20 }}>
           <div style={{ background:'white', borderRadius:16, padding:28, width:440, maxWidth:'100%', boxShadow:'0 24px 64px rgba(0,0,0,0.3)' }}>
-            <h3 style={{ fontSize:16, fontWeight:700, color:NAVY, marginBottom:20, fontFamily:"'GT Pressura','Arial Narrow',Arial,sans-serif" }}>Add New Action</h3>
+            <h3 style={{ fontSize:16, fontWeight:700, color:NAVY, marginBottom:20, fontFamily:"'PepsiCo Head','GT Pressura LCG Black',Arial,sans-serif" }}>Add New Action</h3>
             <div style={{ marginBottom:14 }}>
               <label style={{ display:'block', fontSize:11, fontWeight:600, color:'#02355A', marginBottom:6, textTransform:'uppercase', letterSpacing:0.5 }}>Action description *</label>
-              <textarea value={newAct.desc} onChange={e=>setNewAct(p=>({...p,desc:e.target.value}))} rows={2} placeholder="What needs to happen?" style={{ width:'100%', padding:'10px 12px', fontSize:13, border:'1.5px solid #E3E6EA', borderRadius:8, fontFamily:"Gilroy,Arial,sans-serif", resize:'none', outline:'none' }}/>
+              <textarea value={newAct.desc} onChange={e=>setNewAct(p=>({...p,desc:e.target.value}))} rows={2} placeholder="What needs to happen?" style={{ width:'100%', padding:'10px 12px', fontSize:13, border:'1.5px solid #E3E6EA', borderRadius:8, fontFamily:"'PepsiCo Body',Gilroy,Arial,sans-serif", resize:'none', outline:'none' }}/>
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12, marginBottom:14 }}>
               {[{label:'Owner',key:'owner',type:'text',ph:'Name'},{label:'Due date',key:'due',type:'date',ph:''},{label:'KPI reference',key:'kpiRef',type:'text',ph:'e.g. PSA, OOS…'}].map(f=>(
                 <div key={f.key}>
                   <label style={{ display:'block', fontSize:11, fontWeight:600, color:'#02355A', marginBottom:6, textTransform:'uppercase', letterSpacing:0.5 }}>{f.label}</label>
-                  <input type={f.type} value={newAct[f.key]} placeholder={f.ph} onChange={e=>setNewAct(p=>({...p,[f.key]:e.target.value}))} style={{ width:'100%', padding:'9px 12px', fontSize:13, border:'1.5px solid #E3E6EA', borderRadius:8, fontFamily:"Gilroy,Arial,sans-serif", outline:'none' }}/>
+                  <input type={f.type} value={newAct[f.key]} placeholder={f.ph} onChange={e=>setNewAct(p=>({...p,[f.key]:e.target.value}))} style={{ width:'100%', padding:'9px 12px', fontSize:13, border:'1.5px solid #E3E6EA', borderRadius:8, fontFamily:"'PepsiCo Body',Gilroy,Arial,sans-serif", outline:'none' }}/>
                 </div>
               ))}
               <div>
                 <label style={{ display:'block', fontSize:11, fontWeight:600, color:'#02355A', marginBottom:6, textTransform:'uppercase', letterSpacing:0.5 }}>Priority</label>
-                <select value={newAct.priority} onChange={e=>setNewAct(p=>({...p,priority:e.target.value}))} style={{ width:'100%', padding:'9px 12px', fontSize:13, border:'1.5px solid #E3E6EA', borderRadius:8, fontFamily:"Gilroy,Arial,sans-serif", outline:'none' }}>
+                <select value={newAct.priority} onChange={e=>setNewAct(p=>({...p,priority:e.target.value}))} style={{ width:'100%', padding:'9px 12px', fontSize:13, border:'1.5px solid #E3E6EA', borderRadius:8, fontFamily:"'PepsiCo Body',Gilroy,Arial,sans-serif", outline:'none' }}>
                   <option>High</option><option>Medium</option><option>Low</option>
                 </select>
               </div>
             </div>
             <div style={{ display:'flex', gap:10, justifyContent:'flex-end' }}>
-              <button onClick={()=>setActModal(false)} style={{ fontSize:13, padding:'9px 18px', border:'1.5px solid #E3E6EA', borderRadius:8, cursor:'pointer', background:'white', color:'#02355A', fontFamily:"Gilroy,Arial,sans-serif" }}>Cancel</button>
-              <button onClick={saveAction} style={{ fontSize:13, padding:'9px 18px', background:`linear-gradient(135deg,${BLUE},#3680CE)`, color:'white', border:'none', borderRadius:8, cursor:'pointer', fontFamily:"Gilroy,Arial,sans-serif", fontWeight:600, boxShadow:'0 3px 12px rgba(0,75,147,0.35)' }}>Save action</button>
+              <button onClick={()=>setActModal(false)} style={{ fontSize:13, padding:'9px 18px', border:'1.5px solid #E3E6EA', borderRadius:8, cursor:'pointer', background:'white', color:'#02355A', fontFamily:"'PepsiCo Body',Gilroy,Arial,sans-serif" }}>Cancel</button>
+              <button onClick={saveAction} style={{ fontSize:13, padding:'9px 18px', background:`linear-gradient(135deg,${BLUE},#3680CE)`, color:'white', border:'none', borderRadius:8, cursor:'pointer', fontFamily:"'PepsiCo Body',Gilroy,Arial,sans-serif", fontWeight:600, boxShadow:'0 3px 12px rgba(0,75,147,0.35)' }}>Save action</button>
             </div>
           </div>
         </div>

@@ -16,8 +16,9 @@ const BUS = [
   { country:'UK', bu:'Snacks', live:false },
 ]
 
+// Country codes instead of flag emojis (Windows shows flag emojis as plain letters)
 const FLAGS = {
-  'Poland':'🇵🇱','Mexico':'🇲🇽','Egypt':'🇪🇬','Saudi Arabia':'🇸🇦','UK':'🇬🇧'
+  'Poland':'PL','Mexico':'MX','Egypt':'EG','Saudi Arabia':'SA','UK':'UK'
 }
 
 const KPI_TARGETS = {
@@ -115,7 +116,7 @@ export default function Hub({ session, onSelectBU }) {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#F6F4F1', fontFamily: "Gilroy,Arial,sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: '#F6F4F1', fontFamily: "'PepsiCo Body',Gilroy,Arial,sans-serif" }}>
 
       {/* Header */}
       <div style={{ background: `linear-gradient(135deg, ${NAVY} 0%, ${BLUE} 100%)`, boxShadow: '0 2px 20px rgba(0,0,0,0.2)' }}>
@@ -128,7 +129,7 @@ export default function Hub({ session, onSelectBU }) {
             </div>
             <button
               onClick={() => supabase.auth.signOut()}
-              style={{ fontSize: 11, padding: '5px 12px', background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: 6, color: 'white', cursor: 'pointer', fontFamily: "Gilroy,Arial,sans-serif" }}
+              style={{ fontSize: 11, padding: '5px 12px', background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: 6, color: 'white', cursor: 'pointer', fontFamily: "'PepsiCo Body',Gilroy,Arial,sans-serif" }}
             >Sign out</button>
           </div>
         </div>
@@ -137,10 +138,10 @@ export default function Hub({ session, onSelectBU }) {
       {/* Hero */}
       <div style={{ background: `linear-gradient(135deg, ${NAVY}, ${BLUE})`, padding: '44px 24px 72px' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', textAlign: 'center' }}>
-          <div style={{ fontFamily: "'GT Pressura','Arial Narrow',Arial,sans-serif", fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.55)', letterSpacing: 4, textTransform: 'uppercase', marginBottom: 10 }}>
+          <div style={{ fontFamily: "'PepsiCo Head','GT Pressura LCG Black',Arial,sans-serif", fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.55)', letterSpacing: 4, textTransform: 'uppercase', marginBottom: 10 }}>
             Supply Planning Foundation · SPF Program
           </div>
-          <h1 style={{ fontFamily: "'GT Pressura','Arial Narrow',Arial,sans-serif", fontSize: 46, fontWeight: 700, color: 'white', letterSpacing: 1, margin: 0 }}>
+          <h1 style={{ fontFamily: "'PepsiCo Head','GT Pressura LCG Black',Arial,sans-serif", fontSize: 46, fontWeight: 700, color: 'white', letterSpacing: 1, margin: 0 }}>
             Execution Control Tower
           </h1>
           <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.6)', marginTop: 12 }}>
@@ -184,9 +185,9 @@ export default function Hub({ session, onSelectBU }) {
                   padding: '14px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between'
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <span style={{ fontSize: 26 }}>{FLAGS[bu.country] || '🌍'}</span>
+                    <span style={{ fontFamily: "'PepsiCo Head','GT Pressura LCG Black',Arial,sans-serif", fontSize: 13, fontWeight: 900, color: 'white', background: 'rgba(255,255,255,0.16)', border: '1px solid rgba(255,255,255,0.3)', borderRadius: 8, padding: '6px 8px', minWidth: 36, textAlign: 'center', letterSpacing: 1 }}>{FLAGS[bu.country] || '--'}</span>
                     <div>
-                      <div style={{ fontFamily: "'GT Pressura','Arial Narrow',Arial,sans-serif", fontSize: 17, fontWeight: 700, color: 'white', letterSpacing: 0.5 }}>{bu.country}</div>
+                      <div style={{ fontFamily: "'PepsiCo Head','GT Pressura LCG Black',Arial,sans-serif", fontSize: 17, fontWeight: 700, color: 'white', letterSpacing: 0.5 }}>{bu.country}</div>
                       <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.7)' }}>{bu.bu}</div>
                     </div>
                   </div>
@@ -207,7 +208,7 @@ export default function Hub({ session, onSelectBU }) {
                             { label:'Green', val:polandStats.green, color:'#5D910D', bg:'#EEF6E0' },
                           ].map(s => (
                             <div key={s.label} style={{ background: s.bg, borderRadius: 8, padding: '8px 4px', textAlign: 'center' }}>
-                              <div style={{ fontSize: 22, fontWeight: 700, color: s.color, fontFamily: "'GT Pressura','Arial Narrow',Arial,sans-serif" }}>{s.val}</div>
+                              <div style={{ fontSize: 22, fontWeight: 700, color: s.color, fontFamily: "'PepsiCo Head','GT Pressura LCG Black',Arial,sans-serif" }}>{s.val}</div>
                               <div style={{ fontSize: 10, color: '#5B6B7B' }}>{s.label}</div>
                             </div>
                           ))}
@@ -220,14 +221,14 @@ export default function Hub({ session, onSelectBU }) {
                             ⚠️ {agingActions} action{agingActions > 1 ? 's' : ''} open 5+ days
                           </div>
                         )}
-                        <div style={{ background: BLUE, color: 'white', borderRadius: 8, padding: '9px', textAlign: 'center', fontSize: 13, fontWeight: 600, fontFamily: "Gilroy,Arial,sans-serif" }}>
+                        <div style={{ background: BLUE, color: 'white', borderRadius: 8, padding: '9px', textAlign: 'center', fontSize: 13, fontWeight: 600, fontFamily: "'PepsiCo Body',Gilroy,Arial,sans-serif" }}>
                           Enter Board →
                         </div>
                       </>
                     ) : (
                       <>
                         <div style={{ fontSize: 12, color: '#9ca3af', marginBottom: 12 }}>No sessions yet — enter to get started</div>
-                        <div style={{ background: BLUE, color: 'white', borderRadius: 8, padding: '9px', textAlign: 'center', fontSize: 13, fontWeight: 600, fontFamily: "Gilroy,Arial,sans-serif" }}>
+                        <div style={{ background: BLUE, color: 'white', borderRadius: 8, padding: '9px', textAlign: 'center', fontSize: 13, fontWeight: 600, fontFamily: "'PepsiCo Body',Gilroy,Arial,sans-serif" }}>
                           Enter Board →
                         </div>
                       </>
