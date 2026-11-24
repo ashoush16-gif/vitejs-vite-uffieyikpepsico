@@ -1,6 +1,7 @@
 // Excel / CSV / print exports for the DDS board.
-// Excel needs SheetJS:  npm install xlsx
-// It is loaded on demand, so the board stays fast for users who never export.
+// Excel export uses SheetJS, loaded from its CDN only when someone clicks Export.
+// (Not an npm dependency: the package is large and made StackBlitz/Vite startup very slow.)
+const SHEETJS_URL = 'https://cdn.sheetjs.com/xlsx-0.20.3/package/xlsx.mjs'
 
 import { allKpis, getStatus, valuesBySession, sessionTrend, rootCausePareto, actionAgeing } from './analytics'
 
@@ -55,7 +56,7 @@ export function actionRows(actions, today = new Date()) {
 
 /** Builds a 4-sheet workbook and downloads it: Summary, KPI data, Actions, Root-cause Pareto. */
 export async function exportWorkbook({ GROUPS, sessions, kpiValues, rootCauses, actions, buName = 'DDS' }, statusFn = getStatus) {
-  const XLSX = await import('xlsx')
+  const XLSX = await import(/* @vite-ignore */ SHEETJS_URL)
   const today = new Date()
   const summary = sessionTrend(GROUPS, sessions, kpiValues, 365, statusFn).map((r) => ({
     Date: r.date,
